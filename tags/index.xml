@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on orimajp Tech Site</title>
+    <link>https://orimajp.github.io/tags/</link>
+    <description>Recent content in Tags on orimajp Tech Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-JP</language>
+    <lastBuildDate>Sun, 19 Nov 2017 22:46:30 +0900</lastBuildDate>
+    
+	<atom:link href="https://orimajp.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hugo</title>
+      <link>https://orimajp.github.io/tags/hugo/</link>
+      <pubDate>Sun, 19 Nov 2017 22:46:30 +0900</pubDate>
+      
+      <guid>https://orimajp.github.io/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
