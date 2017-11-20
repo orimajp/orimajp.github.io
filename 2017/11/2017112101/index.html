@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+
+<link rel="canonical" href="https://orimajp.github.io/2017/11/2017112101/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Hugoに苦戦 - orimajp Tech Site</title>
+    
+<meta name="description" content="色々と技術的な調査をしていてモチベーションが続かずに尻すぼみになってしまうことが多く、適当なところにはき出す場所があればと思っていたのだが、">
+
+<meta property="og:title" content="Hugoに苦戦 - orimajp Tech Site">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://orimajp.github.io/2017/11/2017112101/">
+<meta property="og:image" content="https://orimajp.github.io/images/default.png">
+<meta property="og:site_name" content="orimajp Tech Site">
+<meta property="og:description" content="色々と技術的な調査をしていてモチベーションが続かずに尻すぼみになってしまうことが多く、適当なところにはき出す場所があればと思っていたのだが、">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="orimajp Tech Site">
+<meta name="twitter:url" content="https://orimajp.github.io/2017/11/2017112101/">
+<meta name="twitter:title" content="Hugoに苦戦 - orimajp Tech Site">
+<meta name="twitter:description" content="色々と技術的な調査をしていてモチベーションが続かずに尻すぼみになってしまうことが多く、適当なところにはき出す場所があればと思っていたのだが、">
+<meta name="twitter:image" content="https://orimajp.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://orimajp.github.io/"
+    },
+    "headline": "Hugoに苦戦 - orimajp Tech Site",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://orimajp.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-11-21T00:37:32JST",
+    "dateModified": "2017-11-21T00:37:32JST",
+    "author": {
+      "@type": "Person",
+      "name": "orimajp Tech Site"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "orimajp Tech Site",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://orimajp.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "色々と技術的な調査をしていてモチベーションが続かずに尻すぼみになってしまうことが多く、適当なところにはき出す場所があればと思っていたのだが、"
+  }
+</script>
+
+
+    <link href="https://orimajp.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://orimajp.github.io/">orimajp Tech Site</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://orimajp.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://orimajp.github.io/post/" itemprop="url"><span itemprop="title">post</span></a></li>
+        
+        <li class="active">Hugoに苦戦</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-11-21T00:37:32JST">2017-11-21</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://orimajp.github.io/post/">post</a></li>
+      
+    </ul>
+
+    <h1 class="title">Hugoに苦戦</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<p>色々と技術的な調査をしていてモチベーションが続かずに尻すぼみになってしまうことが多く、適当なところにはき出す場所があればと思っていたのだが、Github Pagesに静的サイト生成ツールでブログみたいなものが作れると言うことを知ったので作成してみた。</p>
+
+<h1 id="ツール選定">ツール選定</h1>
+
+<p>この週末ネット上で調べてみたが、Go言語で書かれた<a href="https://gohugo.io/">Hugo</a>というものが生成速度が速くてよいと言うことでこれを選択。休眠状態だが<a href="https://www.movabletype.jp/">Movable Type</a>で構築したブログを持っているのでHTMLの生成速度が大事なのは身にしみている。</p>
+
+<h1 id="お手本探し">お手本探し</h1>
+
+<p>以下のサイトがわかりやすく解説していたのでこちらを頼りに作業開始。</p>
+
+<ul>
+<li><a href="https://holywise.github.io/2016/12/how_to_setup_hugo_site/">HUGOで静的ページサイトを構築する (<sup>1</sup>&frasl;<sub>3</sub>)</a></li>
+<li><a href="https://holywise.github.io/2016/12/how_to_add_pages_hugo_site/">HUGOで静的ページサイトを構築する (<sup>2</sup>&frasl;<sub>3</sub>)</a></li>
+<li><a href="https://holywise.github.io/2017/01/how_to_push_hugo_site/">HUGOで静的ページサイトを構築する (<sup>3</sup>&frasl;<sub>3</sub>)</a></li>
+</ul>
+
+<p>こちらのサイトはとても丁寧に書かれており、全体として非常に助かったのだが、いくつかはまりポイントもあった。</p>
+
+<h1 id="発生した問題と回避策">発生した問題と回避策</h1>
+
+<p>数時間戦っていたのでもはや記憶が曖昧だがとりあえずまとめておく。</p>
+
+<h2 id="hugoの仕様変更">Hugoの仕様変更？</h2>
+
+<p>他のサイトもそうだが、ここ最近でHugoの仕様が変わったのか、<code>default.md</code>ファイルの書式が変わっているらしく、そのままではエラーが出てしまう。</p>
+
+<p>かなり多くのサイトが以下のような記述をしているがこれではエラーになる。</p>
+
+<pre><code class="language-md">+++
+xxx = &quot;&quot;
++++
+</code></pre>
+
+<p>以下のようにyaml?的な記述にしないと通らない。</p>
+
+<pre><code class="language-md">---
+xxx: &quot;&quot;
+---
+</code></pre>
+
+<h2 id="テーマが適用できない">テーマが適用できない</h2>
+
+<h3 id="hugo-themes-hugo-phlat-theme-https-themes-gohugo-io-hugo-phlat-theme"><a href="https://themes.gohugo.io/hugo-phlat-theme/">Hugo Themes | Hugo Phlat Theme</a></h3>
+
+<p>参考サイトで使用しているものだが、個別ページに記述内容が生成されない問題が解決できず。ただ、今考えるとプレビュー方法が間違っていただけかも？</p>
+
+<h3 id="hugo-themes-hugo-bootstrap-premium-https-themes-gohugo-io-hugo-bootstrap-premium"><a href="https://themes.gohugo.io/hugo-bootstrap-premium/">Hugo Themes | Hugo Bootstrap Premium</a></h3>
+
+<p>設定方法が違っているのか上手くいかず。テーマページに調べに行ったが設定項目がたくさんあって怖じ気づいてしまった。</p>
+
+<h3 id="hugo-themes-beg-https-themes-gohugo-io-beg"><a href="https://themes.gohugo.io/beg/">Hugo Themes | Beg</a></h3>
+
+<p>こちらは今回設定したものだが、以下のようなエラーが発生。</p>
+
+<pre><code class="language-shell">ERROR 2017/11/19 18:13:37 Unable to find archetypes directory for theme &quot;hugo_theme_beg&quot; at &quot;/Users/xxxxx/Desktop/hugo/orimajp.github.io/themes/hugo_theme_beg/archetypes&quot;
+</code></pre>
+
+<p>以下のように同様の問題が発生した人もいるようだが、とりあえずHugo Phlat Themeのdefault.mdをコピーしてエラーは回避。</p>
+
+<p><a href="https://inataya.bitbucket.io/blog/0002/">サイトテーマを Beg に変更 - いなた屋</a></p>
+
+<p>ただ、上記ページではテーマのdefault.mdと作業フォルダの/archetypes/default.mdの設定がマージされるように書かれているが、うまくいないので作業フォルダのdefault.mdに全ての設定を書いてしまった。</p>
+
+<p>今考えるとテーマフォルダのdefault.mdが古い文法になっているので無視されたのかも知れないが、とりあえず放置。</p>
+
+<h1 id="とりあえずの設定">とりあえずの設定</h1>
+
+<p>現時点での設定は以下の通り。</p>
+
+<h2 id="archetype-default-md">/archetype/default.md</h2>
+
+<pre><code class="language-md">---
+slug: &quot;&quot;
+title: &quot;{{ replace .TranslationBaseName &quot;-&quot; &quot; &quot; | title }}&quot;
+date: {{ .Date }}
+draft: true
+author: &quot;orimajp&quot;
+tags: [&quot;&quot;,&quot;&quot;]
+categories: [&quot;&quot;,]
+---
+
+text
+</code></pre>
+
+<h2 id="config-toml">/config.toml</h2>
+
+<p>色々コメントアウトしまくりで汚いがそのまま載せる。</p>
+
+<pre><code class="language-toml">DefaultContentLanguage = &quot;ja&quot;             # ビルド時のデフォルト言語指定
+languageCode = &quot;ja-JP&quot;                    # 公開するページの言語指定
+hascjklanguage = true
+
+baseurl = &quot;https://orimajp.github.io/&quot;    # 公開時のベースとなるURL
+title = &quot;orimajp Tech Site&quot;               # サイトのメインタイトル
+#theme = &quot;hugo-phlat-theme&quot;                # サイトで使用するテーマ名
+theme = &quot;hugo_theme_beg&quot;                # サイトで使用するテーマ名
+#theme = &quot;hugo-bootstrap-premium&quot;                # サイトで使用するテーマ名
+
+[permalinks]
+#  post = &quot;/:year/:month/:title/&quot;           # post タイプページのパーマネントリンク構成
+  post = &quot;/:year/:month/:slug/&quot;           # post タイプページのパーマネントリンク構成
+  page = &quot;/:slug/&quot;                        # page タイプページのパーマネントリンク構成
+
+[taxonomies]
+  tag = &quot;tags&quot;                            # タググループ名
+  category = &quot;categories&quot;                 # カテゴリグループ名
+
+[params]
+  dateformat = &quot;2006-01-02&quot;
+  keywords = [&quot;programming&quot;, &quot;developer&quot;] # 生成ページに keywords 指定がないときのデフォルト値 (meta keywords)
+  description = &quot;my tech notes&quot;           # 生成ページに description 指定がないときのデフォルト値 (meta description)
+
+#[[menu.header]]
+#  name = &quot;Home&quot;
+#  weight = 1
+#  url = &quot;/&quot;
+
+#[[menu.header]]
+#  name = &quot;About&quot;
+#  weight = 2
+#  url = &quot;/about/&quot;
+
+</code></pre>
+
+<p>基本設定は参考サイトにある設定をコピーしたものだが、現状Aboutページなどを作っていないのでヘッダ部分はコメントアウトしている。</p>
+
+<h1 id="エントリ作成時">エントリ作成時</h1>
+
+<h3 id="ファイル生成">ファイル生成</h3>
+
+<p>こちらは通常通り。</p>
+
+<pre><code class="language-shell">hugo new post/xxxxxx.md
+</code></pre>
+
+<p>注意点として、プレビューサーバは新しく作成したファイルを上手く扱えない場合がある(個別ページを開いたらNot Foundになったような？)みたいなので、ファイルを作成したら上げ直した方がいい気がする。</p>
+
+<h3 id="ファイル編集">ファイル編集</h3>
+
+<ol>
+<li>slugにファイル名記載</li>
+<li>title変更</li>
+<li>tags、categories編集</li>
+<li>本文編集</li>
+</ol>
+
+<p>ちなみにslugを書かないとtitleがファイル名になる。日本語のURLはエンコードされる関係上、読みにくくかつ長ったらしくなるので個人的に避けたい。</p>
+
+<blockquote>
+<p>最初、HugoでGithub Pagesに書いている人たちがどうやってファイル名を指定しているのか分からなかった。</p>
+</blockquote>
+
+<h1 id="履歴管理">履歴管理</h1>
+
+<p>参考サイトでは<code>public</code>配下をサブリポジトリにして、それ以外のファイル類とは別の、しかし同じgithubのリポジトリに管理していた。</p>
+
+<p>自分としては、書きかけのファイルがリポジトリに公開されるのは不味いこともあるかとおもったので、public配下はgithub管理、それ以外はBitbucketのプライベートリポジトリに置くという変則的な運用とすることにした。</p>
+
+<p>public以外は管理しないという方法もあるが、複数端末で書くことを考えているため却下。</p>
+
+<h2 id="publicディレクトリ配下">publicディレクトリ配下</h2>
+
+<p>全ファイルをgithubの<code>orimajp.github.io</code>リポジトリにプッシュ。</p>
+
+<h2 id="上記以外">上記以外</h2>
+
+<p>publicとthemesディレクトリを<code>.gitignore</code>に指定してBitbucketのプライベートリポジトリにプッシュ。</p>
+
+<p>テーマファイルは<code>git clone</code>すればいいという割り切りから、<code>themes</code>ディレクトリもgit管理とはしない。</p>
+
+<h1 id="余談">余談</h1>
+
+<p>静的生成のブログツールでは、如何に体感ビルド時間を短くするかという工夫が大事なので、寝かせてあるブログサイトでは以下のようなことをしていた。</p>
+
+<ul>
+<li>FastCGIや<a href="https://www.movabletype.jp/faq/about-psgi.html">PSGI</a>(Movable TypeはPerl製なので)対応アプリケーションサーバを使ってスクリプトの実行速度を上げる</li>
+<li>生成ページをPHPにした上で、サイドメニューなどのパーツ類をPHPインクルードで読み込む(どちらかというと更新対象外ページのサイドメニューが古いままになることを防ぐのが目的)</li>
+<li>インデックスページと個別ページ以外をバッチビルドにする(cronでビルドスクリプトを呼ぶ形式)</li>
+<li>ブログツールのキャッシュ機能を使う(上手く使わないと更新されなくてはまる)</li>
+</ul>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://orimajp.github.io/categories/%E3%81%93%E3%81%AE%E3%82%B5%E3%82%A4%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/">このサイトについて</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://orimajp.github.io/tags/hugo/">hugo</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/2017/11/2017112101/" class="list-group-item">Hugoに苦戦</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017111901/" class="list-group-item">開設完了</a>
+      
+      <a href="https://orimajp.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://orimajp.github.io/tags/hugo/" class="list-group-item">Hugo</a>
+      
+      <a href="https://orimajp.github.io/post/" class="list-group-item">Posts</a>
+      
+      <a href="https://orimajp.github.io/tags/" class="list-group-item">Tags</a>
+      
+      <a href="https://orimajp.github.io/" class="list-group-item">orimajp Tech Site</a>
+      
+      <a href="https://orimajp.github.io/categories/%E3%81%93%E3%81%AE%E3%82%B5%E3%82%A4%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="list-group-item">このサイトについて</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/categories/%E3%81%93%E3%81%AE%E3%82%B5%E3%82%A4%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" class="list-group-item">このサイトについて</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/tags/hugo" class="list-group-item">hugo</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; orimajp Tech Site</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

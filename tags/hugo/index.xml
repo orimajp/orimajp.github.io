@@ -6,10 +6,19 @@
     <description>Recent content in Hugo on orimajp Tech Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Sun, 19 Nov 2017 22:46:30 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 21 Nov 2017 00:37:32 +0900</lastBuildDate>
     
 	<atom:link href="https://orimajp.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Hugoに苦戦</title>
+      <link>https://orimajp.github.io/2017/11/2017112101/</link>
+      <pubDate>Tue, 21 Nov 2017 00:37:32 +0900</pubDate>
+      
+      <guid>https://orimajp.github.io/2017/11/2017112101/</guid>
+      <description>色々と技術的な調査をしていてモチベーションが続かずに尻すぼみになってしまうことが多く、適当なところにはき出す場所があればと思っていたのだが、</description>
+    </item>
     
     <item>
       <title>開設完了</title>
