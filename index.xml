@@ -6,10 +6,19 @@
     <description>Recent content on orimajp Tech Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Tue, 21 Nov 2017 00:37:32 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 21 Nov 2017 22:51:28 +0900</lastBuildDate>
     
 	<atom:link href="https://orimajp.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Spring Boot勉強用リポジトリ作成と最初の調査結果</title>
+      <link>https://orimajp.github.io/2017/11/2017112102/</link>
+      <pubDate>Tue, 21 Nov 2017 22:51:28 +0900</pubDate>
+      
+      <guid>https://orimajp.github.io/2017/11/2017112102/</guid>
+      <description>Spring Boot勉強用リポジトリ作成 当初の予定通り、自習した結果を格納するリポジトリを作成した。 https://github.com/orimajp/springboot-study 正直言って後から参照しにくいのだが、細かいプロジ</description>
+    </item>
     
     <item>
       <title>Hugoに苦戦</title>
