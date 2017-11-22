@@ -8,29 +8,29 @@
 
 
 
-<link rel="canonical" href="https://orimajp.github.io/2017/11/2017111901/">
+<link rel="canonical" href="https://orimajp.github.io/2017/11/2017112201/">
 
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <title>開設完了 - orimajp Tech Site</title>
+    <title>Validatorへのインジェクション - orimajp Tech Site</title>
     
-<meta name="description" content="とりあえず作ってみた。 (追記) タイトル変更。 (追記2) URLもおかしいので設定変更。">
+<meta name="description" content="自作アノテーションに対するバリデータクラスにて、DIでインジェクトされたクラスを使う方法のメモ。 アノテーションクラス package com.example.validatorinjection; import javax.validation.Constraint; import javax.validation.Payload; import java.lang.annotation.ElementType; import java.lang.annotation.Retention; import java.lang.annotation.RetentionPolicy;">
 
-<meta property="og:title" content="開設完了 - orimajp Tech Site">
+<meta property="og:title" content="Validatorへのインジェクション - orimajp Tech Site">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://orimajp.github.io/2017/11/2017111901/">
+<meta property="og:url" content="https://orimajp.github.io/2017/11/2017112201/">
 <meta property="og:image" content="https://orimajp.github.io/images/default.png">
 <meta property="og:site_name" content="orimajp Tech Site">
-<meta property="og:description" content="とりあえず作ってみた。 (追記) タイトル変更。 (追記2) URLもおかしいので設定変更。">
+<meta property="og:description" content="自作アノテーションに対するバリデータクラスにて、DIでインジェクトされたクラスを使う方法のメモ。 アノテーションクラス package com.example.validatorinjection; import javax.validation.Constraint; import javax.validation.Payload; import java.lang.annotation.ElementType; import java.lang.annotation.Retention; import java.lang.annotation.RetentionPolicy;">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="orimajp Tech Site">
-<meta name="twitter:url" content="https://orimajp.github.io/2017/11/2017111901/">
-<meta name="twitter:title" content="開設完了 - orimajp Tech Site">
-<meta name="twitter:description" content="とりあえず作ってみた。 (追記) タイトル変更。 (追記2) URLもおかしいので設定変更。">
+<meta name="twitter:url" content="https://orimajp.github.io/2017/11/2017112201/">
+<meta name="twitter:title" content="Validatorへのインジェクション - orimajp Tech Site">
+<meta name="twitter:description" content="自作アノテーションに対するバリデータクラスにて、DIでインジェクトされたクラスを使う方法のメモ。 アノテーションクラス package com.example.validatorinjection; import javax.validation.Constraint; import javax.validation.Payload; import java.lang.annotation.ElementType; import java.lang.annotation.Retention; import java.lang.annotation.RetentionPolicy;">
 <meta name="twitter:image" content="https://orimajp.github.io/images/default.png">
 
 
@@ -42,15 +42,15 @@
       "@type": "WebPage",
       "@id":"https://orimajp.github.io/"
     },
-    "headline": "開設完了 - orimajp Tech Site",
+    "headline": "Validatorへのインジェクション - orimajp Tech Site",
     "image": {
       "@type": "ImageObject",
       "url": "https://orimajp.github.io/images/default.png",
       "height": 800,
       "width": 800
     },
-    "datePublished": "2017-11-19T22:46:30JST",
-    "dateModified": "2017-11-19T22:46:30JST",
+    "datePublished": "2017-11-22T23:23:42JST",
+    "dateModified": "2017-11-22T23:23:42JST",
     "author": {
       "@type": "Person",
       "name": "orimajp Tech Site"
@@ -65,7 +65,7 @@
         "height": 60
       }
     },
-    "description": "とりあえず作ってみた。 (追記) タイトル変更。 (追記2) URLもおかしいので設定変更。"
+    "description": "自作アノテーションに対するバリデータクラスにて、DIでインジェクトされたクラスを使う方法のメモ。 アノテーションクラス package com.example.validatorinjection; import javax.validation.Constraint; import javax.validation.Payload; import java.lang.annotation.ElementType; import java.lang.annotation.Retention; import java.lang.annotation.RetentionPolicy;"
   }
 </script>
 
@@ -111,30 +111,75 @@
         
         <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://orimajp.github.io/post/" itemprop="url"><span itemprop="title">post</span></a></li>
         
-        <li class="active">開設完了</li>
+        <li class="active">Validatorへのインジェクション</li>
       </ol>
     </nav>
 
     <article class="single">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-11-19T22:46:30JST">2017-11-19</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-11-22T23:23:42JST">2017-11-22</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://orimajp.github.io/post/">post</a></li>
       
     </ul>
 
-    <h1 class="title">開設完了</h1>
+    <h1 class="title">Validatorへのインジェクション</h1>
   </header>
 
   
 
-  <div class="article-body"><p>とりあえず作ってみた。</p>
+  <div class="article-body"><p>自作アノテーションに対するバリデータクラスにて、DIでインジェクトされたクラスを使う方法のメモ。</p>
 
-<p>(追記)<br />
-タイトル変更。</p>
+<p>アノテーションクラス</p>
 
-<p>(追記2)<br />
-URLもおかしいので設定変更。</p>
+<pre><code class="language-java">package com.example.validatorinjection;
+
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = TestValidator.class)
+public @interface TestConstraint {
+	String message() default &quot;aaを入力してください。&quot;;
+	Class&lt;?&gt;[] groups() default {};
+	Class&lt;? extends Payload&gt;[] payload() default {};
+}
+</code></pre>
+
+<p>バリデータクラス</p>
+
+<pre><code class="language-java">package com.example.validatorinjection;
+
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.util.StringUtils;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+@RequiredArgsConstructor
+public class TestValidator implements ConstraintValidator&lt;TestConstraint, String&gt; {
+
+	@NonNull
+	private final TestRepository testRepository;
+
+	@Override
+	public void initialize(TestConstraint constraintAnnotation) {
+
+	}
+
+	@Override
+	public boolean isValid(String value, ConstraintValidatorContext context) {
+		return StringUtils.isEmpty(value) || testRepository.authenticate(value);
+	}
+
+}
+</code></pre>
 </div>
 
   <footer class="article-footer">
@@ -148,7 +193,7 @@ URLもおかしいので設定変更。</p>
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://orimajp.github.io/categories/%E3%81%93%E3%81%AE%E3%82%B5%E3%82%A4%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/">このサイトについて</a></li>
+          <li><a href="https://orimajp.github.io/categories/%E3%82%B9%E3%82%BF%E3%83%87%E3%82%A3/">スタディ</a></li>
           
         </ul>
       </div>
@@ -163,7 +208,7 @@ URLもおかしいので設定変更。</p>
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://orimajp.github.io/tags/hugo/">Hugo</a></li>
+          <li><a href="https://orimajp.github.io/tags/springboot/">springboot</a></li>
           
         </ul>
       </div>

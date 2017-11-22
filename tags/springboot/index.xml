@@ -6,10 +6,19 @@
     <description>Recent content in Springboot on orimajp Tech Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Tue, 21 Nov 2017 22:51:28 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 22 Nov 2017 23:23:42 +0900</lastBuildDate>
     
 	<atom:link href="https://orimajp.github.io/tags/springboot/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Validatorへのインジェクション</title>
+      <link>https://orimajp.github.io/2017/11/2017112201/</link>
+      <pubDate>Wed, 22 Nov 2017 23:23:42 +0900</pubDate>
+      
+      <guid>https://orimajp.github.io/2017/11/2017112201/</guid>
+      <description>自作アノテーションに対するバリデータクラスにて、DIでインジェクトされたクラスを使う方法のメモ。 アノテーションクラス package com.example.validatorinjection; import javax.validation.Constraint; import javax.validation.Payload; import java.lang.annotation.ElementType; import java.lang.annotation.Retention; import java.lang.annotation.RetentionPolicy;</description>
+    </item>
     
     <item>
       <title>Spring Boot勉強用リポジトリ作成と最初の調査結果</title>
