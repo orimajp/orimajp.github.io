@@ -8,29 +8,29 @@
 
 
 
-<link rel="canonical" href="https://orimajp.github.io/2017/11/2017112201/">
+<link rel="canonical" href="https://orimajp.github.io/2017/11/2017112301/">
 
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <title>Validatorへのインジェクション - orimajp Tech Site</title>
+    <title>DI対象クラスの新規作成インスタンスからの利用 - orimajp Tech Site</title>
     
-<meta name="description" content="自作アノテーションに対するバリデータクラスにて、DIでインジェクトされたクラスを使う方法のメモ。 アノテーションクラス package com.example.validatorinjection; import javax.validation.Constraint; import javax.validation.Payload; import java.lang.annotation.ElementType; import java.lang.annotation.Retention; import java.lang.annotation.RetentionPolicy;">
+<meta name="description" content="DIを使う場合、基本的にインスタンスをシングルトンで使う事が前提になる。 普通のオブジェクト指向的にデータと処理をまとめたクラスからDIを前提">
 
-<meta property="og:title" content="Validatorへのインジェクション - orimajp Tech Site">
+<meta property="og:title" content="DI対象クラスの新規作成インスタンスからの利用 - orimajp Tech Site">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://orimajp.github.io/2017/11/2017112201/">
+<meta property="og:url" content="https://orimajp.github.io/2017/11/2017112301/">
 <meta property="og:image" content="https://orimajp.github.io/images/default.png">
 <meta property="og:site_name" content="orimajp Tech Site">
-<meta property="og:description" content="自作アノテーションに対するバリデータクラスにて、DIでインジェクトされたクラスを使う方法のメモ。 アノテーションクラス package com.example.validatorinjection; import javax.validation.Constraint; import javax.validation.Payload; import java.lang.annotation.ElementType; import java.lang.annotation.Retention; import java.lang.annotation.RetentionPolicy;">
+<meta property="og:description" content="DIを使う場合、基本的にインスタンスをシングルトンで使う事が前提になる。 普通のオブジェクト指向的にデータと処理をまとめたクラスからDIを前提">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="orimajp Tech Site">
-<meta name="twitter:url" content="https://orimajp.github.io/2017/11/2017112201/">
-<meta name="twitter:title" content="Validatorへのインジェクション - orimajp Tech Site">
-<meta name="twitter:description" content="自作アノテーションに対するバリデータクラスにて、DIでインジェクトされたクラスを使う方法のメモ。 アノテーションクラス package com.example.validatorinjection; import javax.validation.Constraint; import javax.validation.Payload; import java.lang.annotation.ElementType; import java.lang.annotation.Retention; import java.lang.annotation.RetentionPolicy;">
+<meta name="twitter:url" content="https://orimajp.github.io/2017/11/2017112301/">
+<meta name="twitter:title" content="DI対象クラスの新規作成インスタンスからの利用 - orimajp Tech Site">
+<meta name="twitter:description" content="DIを使う場合、基本的にインスタンスをシングルトンで使う事が前提になる。 普通のオブジェクト指向的にデータと処理をまとめたクラスからDIを前提">
 <meta name="twitter:image" content="https://orimajp.github.io/images/default.png">
 
 
@@ -42,15 +42,15 @@
       "@type": "WebPage",
       "@id":"https://orimajp.github.io/"
     },
-    "headline": "Validatorへのインジェクション - orimajp Tech Site",
+    "headline": "DI対象クラスの新規作成インスタンスからの利用 - orimajp Tech Site",
     "image": {
       "@type": "ImageObject",
       "url": "https://orimajp.github.io/images/default.png",
       "height": 800,
       "width": 800
     },
-    "datePublished": "2017-11-22T23:23:42JST",
-    "dateModified": "2017-11-22T23:23:42JST",
+    "datePublished": "2017-11-23T20:01:31JST",
+    "dateModified": "2017-11-23T20:01:31JST",
     "author": {
       "@type": "Person",
       "name": "orimajp Tech Site"
@@ -65,7 +65,7 @@
         "height": 60
       }
     },
-    "description": "自作アノテーションに対するバリデータクラスにて、DIでインジェクトされたクラスを使う方法のメモ。 アノテーションクラス package com.example.validatorinjection; import javax.validation.Constraint; import javax.validation.Payload; import java.lang.annotation.ElementType; import java.lang.annotation.Retention; import java.lang.annotation.RetentionPolicy;"
+    "description": "DIを使う場合、基本的にインスタンスをシングルトンで使う事が前提になる。 普通のオブジェクト指向的にデータと処理をまとめたクラスからDIを前提"
   }
 </script>
 
@@ -111,79 +111,134 @@
         
         <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://orimajp.github.io/post/" itemprop="url"><span itemprop="title">post</span></a></li>
         
-        <li class="active">Validatorへのインジェクション</li>
+        <li class="active">DI対象クラスの新規作成インスタンスからの利用</li>
       </ol>
     </nav>
 
     <article class="single">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-11-22T23:23:42JST">2017-11-22</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-11-23T20:01:31JST">2017-11-23</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://orimajp.github.io/post/">post</a></li>
       
     </ul>
 
-    <h1 class="title">Validatorへのインジェクション</h1>
+    <h1 class="title">DI対象クラスの新規作成インスタンスからの利用</h1>
   </header>
 
   
 
-  <div class="article-body"><p>自作アノテーションに対するバリデータクラスにて、DIでインジェクトされたクラスを使う方法のメモ。</p>
+  <div class="article-body">
 
-<p>アノテーションクラス</p>
+<p>DIを使う場合、基本的にインスタンスをシングルトンで使う事が前提になる。</p>
 
-<pre><code class="language-java">package com.example.validatorinjection;
+<p>普通のオブジェクト指向的にデータと処理をまとめたクラスからDIを前提としたクラスを使う場合、インスタンス生成をどうするのか、DIした場合とnewした場合とで同じインスタンスが取得できるのか調べた。</p>
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+<p>結論から言うと、newするとDIで生成したクラスとは別のインスタンスになる模様。つまりシングルトン前提のクラスを通常のクラスから正しく利用することはできないらしい。</p>
 
-@Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = TestValidator.class)
-public @interface TestConstraint {
-	String message() default &quot;aaを入力してください。&quot;;
-	Class&lt;?&gt;[] groups() default {};
-	Class&lt;? extends Payload&gt;[] payload() default {};
-}
-</code></pre>
+<h1 id="ファクトリクラス-メソッドを使う方法">ファクトリクラス/メソッドを使う方法</h1>
 
-<p>バリデータクラス</p>
+<p>よく考えたら別にnewを使う必要は無く、DIを参照するクラスをファクトリクラスで生成すればいい。ただファクトリクラス自身はDIで取得したインスタンスを使う必要がある。</p>
 
-<pre><code class="language-java">package com.example.validatorinjection;
+<h2 id="コントローラ">コントローラ</h2>
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import org.springframework.util.StringUtils;
+<pre><code class="language-java">package com.example.singleton;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@RequiredArgsConstructor
-public class TestValidator implements ConstraintValidator&lt;TestConstraint, String&gt; {
+@RestController
+public class TestController {
+	private final MyLogicFactory myLogicFactory;
 
-	@NonNull
-	private final TestRepository testRepository;
-
-	@Override
-	public void initialize(TestConstraint constraintAnnotation) {
-
+	public TestController(MyLogicFactory myLogicFactory) {
+		this.myLogicFactory = myLogicFactory;
 	}
 
-	@Override
-	public boolean isValid(String value, ConstraintValidatorContext context) {
-		return StringUtils.isEmpty(value) || testRepository.authenticate(value);
+	@RequestMapping(&quot;/&quot;)
+	public String index() {
+		MyLogic myLogic = myLogicFactory.of();
+		// myLogicを使った処理
+
+		return &quot;ok&quot;;
 	}
 
 }
 </code></pre>
 
-<p>今回のサンプル(何故かエラーメッセージが画面に出ない&hellip;)。</p>
+<h2 id="利用したいbean">利用したいBean</h2>
 
-<p><a href="https://github.com/orimajp/springboot-study/tree/master/validatorinjection">https://github.com/orimajp/springboot-study/tree/master/validatorinjection</a></p>
+<pre><code class="language-java">package com.example.singleton;
+
+public class TestBean {
+	// 固有の処理
+}
+</code></pre>
+
+<h2 id="beanのコンフィグレーションクラス">Beanのコンフィグレーションクラス</h2>
+
+<pre><code class="language-java">package com.example.singleton;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class TestConfig {
+
+	@Bean
+	public TestBean testBean() {
+		return new TestBean();
+	}
+
+}
+</code></pre>
+
+<h2 id="testbean利用クラス">TestBean利用クラス</h2>
+
+<pre><code class="language-java">package com.example.singleton;
+
+public class MyLogic {
+
+	private final TestBean testBean;
+
+	public MyLogic(TestBean testBean) {
+		this.testBean = testBean;
+	}
+
+	// TestBeanを使った処理
+
+}
+</code></pre>
+
+<h2 id="testbean利用クラスのファクトリクラス">TestBean利用クラスのファクトリクラス</h2>
+
+<pre><code class="language-java">package com.example.singleton;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyLogicFactory {
+
+	private final TestBean testBean;
+
+	public MyLogicFactory(TestBean testBean) {
+		this.testBean = testBean;
+	}
+
+	public MyLogic of() {
+		return new MyLogic(testBean);
+	}
+
+}
+</code></pre>
+
+<p>フレームワーク内でインスタンスが生成されるなどこちらが手を出せない場合は駄目だが、通常の利用方法であれば利用できる。</p>
+
+<p>ちなみにSpring Bootを使う前はPlayframeworkをよく使っていたが、バージョン2.5でDIが導入されたときにフォームクラスの生成方法が変わった理由が今更分かった気がする。</p>
+
+<h1 id="今回使ったサンプル">今回使ったサンプル</h1>
+
+<p><a href="https://github.com/orimajp/springboot-study/tree/master/singleton">https://github.com/orimajp/springboot-study/tree/master/singleton</a></p>
 </div>
 
   <footer class="article-footer">
