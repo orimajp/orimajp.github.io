@@ -6,10 +6,19 @@
     <description>Recent content in スタディ on orimajp Tech Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Thu, 23 Nov 2017 20:01:31 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 24 Nov 2017 21:04:48 +0900</lastBuildDate>
     
 	<atom:link href="https://orimajp.github.io/categories/%E3%82%B9%E3%82%BF%E3%83%87%E3%82%A3/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Server Sent Eventsテスト実装</title>
+      <link>https://orimajp.github.io/2017/11/2017112401/</link>
+      <pubDate>Fri, 24 Nov 2017 21:04:48 +0900</pubDate>
+      
+      <guid>https://orimajp.github.io/2017/11/2017112401/</guid>
+      <description>SSEは聞いたことはあっても実装したことがなかったので、使う機会があるかはともかくやってみた。 基本的に書籍とWeb情報そのままという感じ。 メ</description>
+    </item>
     
     <item>
       <title>DI対象クラスの新規作成インスタンスからの利用</title>

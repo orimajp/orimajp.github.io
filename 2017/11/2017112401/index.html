@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+
+<link rel="canonical" href="https://orimajp.github.io/2017/11/2017112401/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Server Sent Eventsテスト実装 - orimajp Tech Site</title>
+    
+<meta name="description" content="SSEは聞いたことはあっても実装したことがなかったので、使う機会があるかはともかくやってみた。 基本的に書籍とWeb情報そのままという感じ。 メ">
+
+<meta property="og:title" content="Server Sent Eventsテスト実装 - orimajp Tech Site">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://orimajp.github.io/2017/11/2017112401/">
+<meta property="og:image" content="https://orimajp.github.io/images/default.png">
+<meta property="og:site_name" content="orimajp Tech Site">
+<meta property="og:description" content="SSEは聞いたことはあっても実装したことがなかったので、使う機会があるかはともかくやってみた。 基本的に書籍とWeb情報そのままという感じ。 メ">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="orimajp Tech Site">
+<meta name="twitter:url" content="https://orimajp.github.io/2017/11/2017112401/">
+<meta name="twitter:title" content="Server Sent Eventsテスト実装 - orimajp Tech Site">
+<meta name="twitter:description" content="SSEは聞いたことはあっても実装したことがなかったので、使う機会があるかはともかくやってみた。 基本的に書籍とWeb情報そのままという感じ。 メ">
+<meta name="twitter:image" content="https://orimajp.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://orimajp.github.io/"
+    },
+    "headline": "Server Sent Eventsテスト実装 - orimajp Tech Site",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://orimajp.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-11-24T21:04:48JST",
+    "dateModified": "2017-11-24T21:04:48JST",
+    "author": {
+      "@type": "Person",
+      "name": "orimajp Tech Site"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "orimajp Tech Site",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://orimajp.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "SSEは聞いたことはあっても実装したことがなかったので、使う機会があるかはともかくやってみた。 基本的に書籍とWeb情報そのままという感じ。 メ"
+  }
+</script>
+
+
+    <link href="https://orimajp.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://orimajp.github.io/">orimajp Tech Site</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://orimajp.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://orimajp.github.io/post/" itemprop="url"><span itemprop="title">post</span></a></li>
+        
+        <li class="active">Server Sent Eventsテスト実装</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-11-24T21:04:48JST">2017-11-24</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://orimajp.github.io/post/">post</a></li>
+      
+    </ul>
+
+    <h1 class="title">Server Sent Eventsテスト実装</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<p>SSEは聞いたことはあっても実装したことがなかったので、使う機会があるかはともかくやってみた。</p>
+
+<p>基本的に書籍とWeb情報そのままという感じ。</p>
+
+<h1 id="メインクラス">メインクラス</h1>
+
+<p>非同期処理のために<code>@EnableAsync</code>アノテーションを付加。</p>
+
+<pre><code class="language-java">package com.example.seversenteventsample;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
+
+@SpringBootApplication
+@EnableAsync
+public class SeverSentEventSampleApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SeverSentEventSampleApplication.class, args);
+	}
+}
+</code></pre>
+
+<h1 id="コントローラ">コントローラ</h1>
+
+<pre><code class="language-java">package com.example.seversenteventsample;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import java.io.IOException;
+
+@Controller
+public class TopController {
+
+	private final GreetingMessageSender greetingMessageSender;
+
+	public TopController(GreetingMessageSender greetingMessageSender) {
+		this.greetingMessageSender = greetingMessageSender;
+	}
+
+	@RequestMapping(path = &quot;/&quot;, method = RequestMethod.GET)
+	public String index() {
+		return &quot;index&quot;;
+	}
+
+	@RequestMapping(path = &quot;/greeting&quot;, method = RequestMethod.GET)
+	public SseEmitter greeting() throws IOException, InterruptedException {
+		final SseEmitter emitter = new SseEmitter();
+		greetingMessageSender.send(emitter);
+		return emitter;
+	}
+
+}
+</code></pre>
+
+<h1 id="実装コンポーネント">実装コンポーネント</h1>
+
+<pre><code class="language-java">package com.example.seversenteventsample;
+
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+@Component
+public class GreetingMessageSender {
+
+	@Async
+	public void send(SseEmitter emitter) throws IOException, InterruptedException {
+		int i = 1;
+
+		emitter.send(SseEmitter.event().id(String.valueOf(i++)).data(&quot;Good Morning !&quot;));
+
+		TimeUnit.SECONDS.sleep(1);
+
+		emitter.send(SseEmitter.event().id(String.valueOf(i++)).data(&quot;Hello !&quot;));
+
+		TimeUnit.SECONDS.sleep(1);
+
+		emitter.send(SseEmitter.event().id(String.valueOf(i)).data(&quot;Good night !&quot;));
+
+		TimeUnit.SECONDS.sleep(1);
+
+		emitter.complete();
+	}
+
+}
+</code></pre>
+
+<h1 id="テスト画面">テスト画面</h1>
+
+<p>サーバ側は3回メッセージを送って停止する作りだが、実際には<code>onerror</code>のイベントハンドラで止めないと延々繰り返されるので注意。実際に使う際は、サーバからの停止用カスタムイベントを受けて止めるなどの処理が必要かも知れない。</p>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+	&lt;meta charset=&quot;UTF-8&quot; /&gt;
+	&lt;title&gt;Server Sent Eventsサンプル&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Server Send Eventsサンプル&lt;/h1&gt;
+
+&lt;ul id=&quot;message&quot;&gt;&lt;/ul&gt;
+
+&lt;script src=&quot;https://code.jquery.com/jquery-2.2.4.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+	$(function () {
+		(function getGreetingMessage() {
+			var messageUl = $('#message');
+			if (window.EventSource) {
+				var sse = new EventSource('/greeting');
+				sse.onopen = function (e) {
+					console.log('接続を開始しました。')
+				};
+				sse.onmessage = function (e) {
+					console.log('event occured.');
+					var newLi = '&lt;li&gt;' + 'id:' + e.lastEventId + ' data:' + e.data + '&lt;/li&gt;';
+					messageUl.append(newLi);
+				};
+				sse.onerror = function (e) {
+					if (sse.readyState !== 1) {
+						console.log('エラーが発生したため切断します。readyState=' + sse.readyState);
+						sse.close();
+					}
+				};
+			} else {
+				alert('未対応のブラウザです。');
+			}
+		})();
+	});
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>プロジェクトはこちら。</p>
+
+<p><a href="https://github.com/orimajp/springboot-study/tree/master/server-sent-event-sample">https://github.com/orimajp/springboot-study/tree/master/server-sent-event-sample</a></p>
+
+<h1 id="参考">参考</h1>
+
+<h2 id="サーバサイド">サーバサイド</h2>
+
+<p><a href="http://www.shoeisha.co.jp/book/detail/9784798142470">Spring徹底入門 Spring FrameworkによるJavaアプリケーション開発（株式会社NTTデータ）｜翔泳社の本</a></p>
+
+<h2 id="クライアントサイド">クライアントサイド</h2>
+
+<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Server-sent_events/Using_server-sent_events">Server-Sent Events の利用 - Server-sent events | MDN</a></li>
+<li><a href="https://tech.cmd08.com/server-sent-events">【JavaScript, PHP】Server-Sent Events でプッシュ通信をする - TECH.CMD08.COM</a></li>
+<li><a href="http://kimulla.hatenablog.com/entry/2016/01/17/%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%BF%E3%82%A4%E3%83%A0%E3%81%AAweb%E3%82%A2%E3%83%97%E3%83%AA%E3%82%92%E5%AE%9F%E7%8F%BE%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95%28%E3%83%9D%E3%83%BC%E3%83%AA%E3%83%B3">リアルタイムなwebアプリを実現する方法(ポーリング、Comet、Server Sent Events、WebSocket) - SIerだけど技術やりたいブログ</a></li>
+</ul>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://orimajp.github.io/categories/%E3%82%B9%E3%82%BF%E3%83%87%E3%82%A3/">スタディ</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://orimajp.github.io/tags/springboot/">springboot</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/2017/11/2017112401/" class="list-group-item">Server Sent Eventsテスト実装</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112301/" class="list-group-item">DI対象クラスの新規作成インスタンスからの利用</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112201/" class="list-group-item">Validatorへのインジェクション</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112102/" class="list-group-item">Spring Boot勉強用リポジトリ作成と最初の調査結果</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112101/" class="list-group-item">Hugoに苦戦</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017111901/" class="list-group-item">開設完了</a>
+      
+      <a href="https://orimajp.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://orimajp.github.io/tags/hugo/" class="list-group-item">Hugo</a>
+      
+      <a href="https://orimajp.github.io/post/" class="list-group-item">Posts</a>
+      
+      <a href="https://orimajp.github.io/tags/springboot/" class="list-group-item">Springboot</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/categories/%E3%82%B9%E3%82%BF%E3%83%87%E3%82%A3" class="list-group-item">スタディ</a>
+      
+      <a href="https://orimajp.github.io/categories/%E3%81%93%E3%81%AE%E3%82%B5%E3%82%A4%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" class="list-group-item">このサイトについて</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/tags/springboot" class="list-group-item">springboot</a>
+      
+      <a href="https://orimajp.github.io/tags/hugo" class="list-group-item">hugo</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; orimajp Tech Site</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
