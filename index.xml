@@ -6,10 +6,19 @@
     <description>Recent content on orimajp Tech Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Fri, 24 Nov 2017 21:04:48 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 25 Nov 2017 17:44:22 +0900</lastBuildDate>
     
 	<atom:link href="https://orimajp.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>テーマ変更</title>
+      <link>https://orimajp.github.io/2017/11/2017112501/</link>
+      <pubDate>Sat, 25 Nov 2017 17:44:22 +0900</pubDate>
+      
+      <guid>https://orimajp.github.io/2017/11/2017112501/</guid>
+      <description>試しにテーマを変更してみた。 元々のテーマがBootstrapベースと言うことで以下よりFlatlyを選択。 Bootswatch · BootstrapCDN by MaxCDN 変更方法については以下の</description>
+    </item>
     
     <item>
       <title>Server Sent Eventsテスト実装</title>
