@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Flyway on orimajp Tech Site</title>
+    <link>https://orimajp.github.io/tags/flyway/</link>
+    <description>Recent content in Flyway on orimajp Tech Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-JP</language>
+    <lastBuildDate>Sun, 26 Nov 2017 00:12:15 +0900</lastBuildDate>
+    
+	<atom:link href="https://orimajp.github.io/tags/flyway/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>H2DB(MySQL mode)とFlywayの組み合わせ障害</title>
+      <link>https://orimajp.github.io/2017/11/2017112601/</link>
+      <pubDate>Sun, 26 Nov 2017 00:12:15 +0900</pubDate>
+      
+      <guid>https://orimajp.github.io/2017/11/2017112601/</guid>
+      <description>今の職場ではマイグレーションツールの類いを全く使っておらず、メンテナンスが辛いことがあるので、以前から話に聞くFlywayを調べていてはまっ</description>
+    </item>
+    
+  </channel>
+</rss>

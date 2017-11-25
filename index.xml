@@ -6,10 +6,19 @@
     <description>Recent content on orimajp Tech Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Sat, 25 Nov 2017 17:44:22 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 26 Nov 2017 00:12:15 +0900</lastBuildDate>
     
 	<atom:link href="https://orimajp.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>H2DB(MySQL mode)とFlywayの組み合わせ障害</title>
+      <link>https://orimajp.github.io/2017/11/2017112601/</link>
+      <pubDate>Sun, 26 Nov 2017 00:12:15 +0900</pubDate>
+      
+      <guid>https://orimajp.github.io/2017/11/2017112601/</guid>
+      <description>今の職場ではマイグレーションツールの類いを全く使っておらず、メンテナンスが辛いことがあるので、以前から話に聞くFlywayを調べていてはまっ</description>
+    </item>
     
     <item>
       <title>テーマ変更</title>

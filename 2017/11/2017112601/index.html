@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+
+<link rel="canonical" href="https://orimajp.github.io/2017/11/2017112601/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-+ENW/yibaokMnme+vBLnHMphUYxHs34h9lpdbSLuAwGkOKFRl4C34WkjazBtb7eT" crossorigin="anonymous">
+    <title>H2DB(MySQL mode)とFlywayの組み合わせ障害 - orimajp Tech Site</title>
+    
+<meta name="description" content="今の職場ではマイグレーションツールの類いを全く使っておらず、メンテナンスが辛いことがあるので、以前から話に聞くFlywayを調べていてはまっ">
+
+<meta property="og:title" content="H2DB(MySQL mode)とFlywayの組み合わせ障害 - orimajp Tech Site">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://orimajp.github.io/2017/11/2017112601/">
+<meta property="og:image" content="https://orimajp.github.io/images/default.png">
+<meta property="og:site_name" content="orimajp Tech Site">
+<meta property="og:description" content="今の職場ではマイグレーションツールの類いを全く使っておらず、メンテナンスが辛いことがあるので、以前から話に聞くFlywayを調べていてはまっ">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="orimajp Tech Site">
+<meta name="twitter:url" content="https://orimajp.github.io/2017/11/2017112601/">
+<meta name="twitter:title" content="H2DB(MySQL mode)とFlywayの組み合わせ障害 - orimajp Tech Site">
+<meta name="twitter:description" content="今の職場ではマイグレーションツールの類いを全く使っておらず、メンテナンスが辛いことがあるので、以前から話に聞くFlywayを調べていてはまっ">
+<meta name="twitter:image" content="https://orimajp.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://orimajp.github.io/"
+    },
+    "headline": "H2DB(MySQL mode)とFlywayの組み合わせ障害 - orimajp Tech Site",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://orimajp.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-11-26T00:12:15JST",
+    "dateModified": "2017-11-26T00:12:15JST",
+    "author": {
+      "@type": "Person",
+      "name": "orimajp Tech Site"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "orimajp Tech Site",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://orimajp.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "今の職場ではマイグレーションツールの類いを全く使っておらず、メンテナンスが辛いことがあるので、以前から話に聞くFlywayを調べていてはまっ"
+  }
+</script>
+
+
+    <link href="https://orimajp.github.io/css/styles.css" rel="stylesheet">
+    <link href="https://orimajp.github.io/css/main.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://orimajp.github.io/">orimajp Tech Site</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://orimajp.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://orimajp.github.io/post/" itemprop="url"><span itemprop="title">post</span></a></li>
+        
+        <li class="active">H2DB(MySQL mode)とFlywayの組み合わせ障害</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-11-26T00:12:15JST">2017-11-26</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://orimajp.github.io/post/">post</a></li>
+      
+    </ul>
+
+    <h1 class="title">H2DB(MySQL mode)とFlywayの組み合わせ障害</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<p>今の職場ではマイグレーションツールの類いを全く使っておらず、メンテナンスが辛いことがあるので、以前から話に聞くFlywayを調べていてはまった障害についてメモを残す。</p>
+
+<h1 id="発生条件と現象">発生条件と現象</h1>
+
+<p>MySQLモードのH2DBとFlywayを組み合わせて作ったSpring Bootのアプリを起動すると以下のエラーが発生する。</p>
+
+<pre><code class="language-log">org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Invocation of init method failed; nested exception is org.flywaydb.core.internal.dbsupport.FlywaySqlScriptException: 
+Script failed
+-------------
+SQL State  : 90079
+Error Code : 90079
+Message    : スキーマ &quot;public&quot; が見つかりません
+Schema &quot;public&quot; not found; SQL statement:
+CREATE TABLE &quot;public&quot;.&quot;schema_version&quot; (
+    &quot;version_rank&quot; INT NOT NULL,
+    &quot;installed_rank&quot; INT NOT NULL,
+    &quot;version&quot; VARCHAR(50) NOT NULL,
+    &quot;description&quot; VARCHAR(200) NOT NULL,
+    &quot;type&quot; VARCHAR(20) NOT NULL,
+    &quot;script&quot; VARCHAR(1000) NOT NULL,
+    &quot;checksum&quot; INT,
+    &quot;installed_by&quot; VARCHAR(100) NOT NULL,
+    &quot;installed_on&quot; TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    &quot;execution_time&quot; INT NOT NULL,
+    &quot;success&quot; BOOLEAN NOT NULL
+) [90079-196]
+Line       : 17
+Statement  : CREATE TABLE &quot;public&quot;.&quot;schema_version&quot; (
+    &quot;version_rank&quot; INT NOT NULL,
+    &quot;installed_rank&quot; INT NOT NULL,
+    &quot;version&quot; VARCHAR(50) NOT NULL,
+    &quot;description&quot; VARCHAR(200) NOT NULL,
+    &quot;type&quot; VARCHAR(20) NOT NULL,
+    &quot;script&quot; VARCHAR(1000) NOT NULL,
+    &quot;checksum&quot; INT,
+    &quot;installed_by&quot; VARCHAR(100) NOT NULL,
+    &quot;installed_on&quot; TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    &quot;execution_time&quot; INT NOT NULL,
+    &quot;success&quot; BOOLEAN NOT NULL
+)
+</code></pre>
+
+<p>これはMySQLモードを指定しないH2DBでは発生しない。</p>
+
+<p>調べてみると、H2DBではMySQL時のスキーマ名が<code>PUBLIC</code>と大文字になってしまう?らしく、Flywayでバージョン管理テーブルを作る際にエラーが発生する模様。</p>
+
+<h1 id="解決策第1弾">解決策第1弾</h1>
+
+<p>とりあえず<code>application.properties</code>にてFlywayに大文字のスキーマ名を指定する。</p>
+
+<pre><code class="language-pro">flyway.schemas=PUBLIC
+</code></pre>
+
+<p>すると状況は変わるがやはりエラー。</p>
+
+<pre><code class="language-log">Caused by: org.h2.jdbc.JdbcSQLException: スキーマ &quot;public&quot; が見つかりません
+Schema &quot;public&quot; not found; SQL statement:
+SET SCHEMA &quot;public&quot; [90079-196]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345) ~[h2-1.4.196.jar:1.4.196]
+	at org.h2.message.DbException.get(DbException.java:179) ~[h2-1.4.196.jar:1.4.196]
+	at org.h2.message.DbException.get(DbException.java:155) ~[h2-1.4.196.jar:1.4.196]
+	at org.h2.engine.Database.getSchema(Database.java:1755) ~[h2-1.4.196.jar:1.4.196]
+	at org.h2.command.dml.Set.update(Set.java:408) ~[h2-1.4.196.jar:1.4.196]
+	at org.h2.command.CommandContainer.update(CommandContainer.java:101) ~[h2-1.4.196.jar:1.4.196]
+	at org.h2.command.Command.executeUpdate(Command.java:260) ~[h2-1.4.196.jar:1.4.196]
+	at org.h2.jdbc.JdbcPreparedStatement.execute(JdbcPreparedStatement.java:207) ~[h2-1.4.196.jar:1.4.196]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_131]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_131]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_131]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_131]
+	at org.apache.tomcat.jdbc.pool.StatementFacade$StatementProxy.invoke(StatementFacade.java:114) ~[tomcat-jdbc-8.5.23.jar:na]
+	at com.sun.proxy.$Proxy73.execute(Unknown Source) ~[na:na]
+	at org.flywaydb.core.internal.dbsupport.JdbcTemplate.execute(JdbcTemplate.java:219) ~[flyway-core-3.2.1.jar:na]
+	at org.flywaydb.core.internal.dbsupport.h2.H2DbSupport.doSetCurrentSchema(H2DbSupport.java:70) ~[flyway-core-3.2.1.jar:na]
+	at org.flywaydb.core.internal.dbsupport.DbSupport.setCurrentSchema(DbSupport.java:101) ~[flyway-core-3.2.1.jar:na]
+	... 23 common frames omitted
+</code></pre>
+
+<h1 id="解決策第2弾">解決策第2弾</h1>
+
+<p>これに加えてマイグレーションスクリプトの一つ目でスキーマを作成することでエラーは消える。</p>
+
+<pre><code class="language-sql">create schema if not exists &quot;public&quot;;
+</code></pre>
+
+<p>この問題は分かりにくい上、まともな解決策とも思えないので何とかして欲しいのだが、参考ページを見る限りは望み薄という印象。</p>
+
+<p>プロジェクトはこちら。</p>
+
+<p><a href="https://github.com/orimajp/springboot-study/tree/master/flyway-h2db-mysqlmode-trouble">springboot-study/flyway-h2db-mysqlmode-trouble at master · orimajp/springboot-study</a></p>
+
+<h1 id="参考">参考</h1>
+
+<ul>
+<li><a href="https://qiita.com/niwashun/items/dc71dfba4cbb9e9eef98">Flyway + H2 with MySQL Compatibility Mode - Qiita</a></li>
+<li><a href="https://stackoverflow.com/questions/14972408/schema-related-problems-with-flyway-spring-and-h2-embedded-database">Schema related problems with Flyway / Spring and H2 embedded database - Stack Overflow</a></li>
+<li><a href="https://ishiis.net/2016/11/26/spring-boot-automation-unit-test/">Spring Bootを使ったWebアプリのユニットテスト自動化について | エンジニアっぽいことを書くブログ</a></li>
+<li><a href="http://white-azalea.hatenablog.jp/entry/2017/07/02/124136">SPA アプリそろそろ作って見たいんじゃい(2) - 謎言語使いの徒然</a></li>
+</ul>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://orimajp.github.io/categories/%E3%82%B9%E3%82%BF%E3%83%87%E3%82%A3/">スタディ</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://orimajp.github.io/tags/springboot/">springboot</a></li>
+          
+          <li><a href="https://orimajp.github.io/tags/flyway/">flyway</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/2017/11/2017112601/" class="list-group-item">H2DB(MySQL mode)とFlywayの組み合わせ障害</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112501/" class="list-group-item">テーマ変更</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112401/" class="list-group-item">Server Sent Eventsテスト実装</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112301/" class="list-group-item">DI対象クラスの新規作成インスタンスからの利用</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112201/" class="list-group-item">Validatorへのインジェクション</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112102/" class="list-group-item">Spring Boot勉強用リポジトリ作成と最初の調査結果</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112101/" class="list-group-item">Hugoに苦戦</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017111901/" class="list-group-item">開設完了</a>
+      
+      <a href="https://orimajp.github.io/categories/" class="list-group-item">Categories</a>
+      
+      <a href="https://orimajp.github.io/tags/flyway/" class="list-group-item">Flyway</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/categories/%E3%82%B9%E3%82%BF%E3%83%87%E3%82%A3" class="list-group-item">スタディ</a>
+      
+      <a href="https://orimajp.github.io/categories/%E3%81%93%E3%81%AE%E3%82%B5%E3%82%A4%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" class="list-group-item">このサイトについて</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/tags/springboot" class="list-group-item">springboot</a>
+      
+      <a href="https://orimajp.github.io/tags/hugo" class="list-group-item">hugo</a>
+      
+      <a href="https://orimajp.github.io/tags/flyway" class="list-group-item">flyway</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; orimajp Tech Site</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

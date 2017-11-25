@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://orimajp.github.io/2017/11/2017112601/</loc>
+    <lastmod>2017-11-26T00:12:15+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://orimajp.github.io/2017/11/2017112501/</loc>
     <lastmod>2017-11-25T17:44:22+09:00</lastmod>
   </url>
@@ -43,6 +48,12 @@
   </url>
   
   <url>
+    <loc>https://orimajp.github.io/tags/flyway/</loc>
+    <lastmod>2017-11-26T00:12:15+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://orimajp.github.io/tags/hugo/</loc>
     <lastmod>2017-11-25T17:44:22+09:00</lastmod>
     <priority>0</priority>
@@ -50,25 +61,25 @@
   
   <url>
     <loc>https://orimajp.github.io/post/</loc>
-    <lastmod>2017-11-25T17:44:22+09:00</lastmod>
+    <lastmod>2017-11-26T00:12:15+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://orimajp.github.io/tags/springboot/</loc>
-    <lastmod>2017-11-24T21:04:48+09:00</lastmod>
+    <lastmod>2017-11-26T00:12:15+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://orimajp.github.io/tags/</loc>
-    <lastmod>2017-11-25T17:44:22+09:00</lastmod>
+    <lastmod>2017-11-26T00:12:15+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://orimajp.github.io/</loc>
-    <lastmod>2017-11-25T17:44:22+09:00</lastmod>
+    <lastmod>2017-11-26T00:12:15+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -80,7 +91,7 @@
   
   <url>
     <loc>https://orimajp.github.io/categories/%E3%82%B9%E3%82%BF%E3%83%87%E3%82%A3/</loc>
-    <lastmod>2017-11-24T21:04:48+09:00</lastmod>
+    <lastmod>2017-11-26T00:12:15+09:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -6,10 +6,19 @@
     <description>Recent content in Tags on orimajp Tech Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Sat, 25 Nov 2017 17:44:22 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 26 Nov 2017 00:12:15 +0900</lastBuildDate>
     
 	<atom:link href="https://orimajp.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Flyway</title>
+      <link>https://orimajp.github.io/tags/flyway/</link>
+      <pubDate>Sun, 26 Nov 2017 00:12:15 +0900</pubDate>
+      
+      <guid>https://orimajp.github.io/tags/flyway/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Hugo</title>
@@ -23,7 +32,7 @@
     <item>
       <title>Springboot</title>
       <link>https://orimajp.github.io/tags/springboot/</link>
-      <pubDate>Fri, 24 Nov 2017 21:04:48 +0900</pubDate>
+      <pubDate>Sun, 26 Nov 2017 00:12:15 +0900</pubDate>
       
       <guid>https://orimajp.github.io/tags/springboot/</guid>
       <description></description>
