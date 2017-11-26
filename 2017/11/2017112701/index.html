@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+
+<link rel="canonical" href="https://orimajp.github.io/2017/11/2017112701/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-+ENW/yibaokMnme+vBLnHMphUYxHs34h9lpdbSLuAwGkOKFRl4C34WkjazBtb7eT" crossorigin="anonymous">
+    <title>@Asyncを使った非同期処理における例外の扱い - orimajp Tech Site</title>
+    
+<meta name="description" content="時間が掛かる複数の処理をマルチスレッドで同時並行で動かすバッチを検討していて、エラー処理をどうするのかという点が気になったので調査を実施。 前">
+
+<meta property="og:title" content="@Asyncを使った非同期処理における例外の扱い - orimajp Tech Site">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://orimajp.github.io/2017/11/2017112701/">
+<meta property="og:image" content="https://orimajp.github.io/images/default.png">
+<meta property="og:site_name" content="orimajp Tech Site">
+<meta property="og:description" content="時間が掛かる複数の処理をマルチスレッドで同時並行で動かすバッチを検討していて、エラー処理をどうするのかという点が気になったので調査を実施。 前">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="orimajp Tech Site">
+<meta name="twitter:url" content="https://orimajp.github.io/2017/11/2017112701/">
+<meta name="twitter:title" content="@Asyncを使った非同期処理における例外の扱い - orimajp Tech Site">
+<meta name="twitter:description" content="時間が掛かる複数の処理をマルチスレッドで同時並行で動かすバッチを検討していて、エラー処理をどうするのかという点が気になったので調査を実施。 前">
+<meta name="twitter:image" content="https://orimajp.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://orimajp.github.io/"
+    },
+    "headline": "@Asyncを使った非同期処理における例外の扱い - orimajp Tech Site",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://orimajp.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-11-27T00:19:06JST",
+    "dateModified": "2017-11-27T00:19:06JST",
+    "author": {
+      "@type": "Person",
+      "name": "orimajp Tech Site"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "orimajp Tech Site",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://orimajp.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "時間が掛かる複数の処理をマルチスレッドで同時並行で動かすバッチを検討していて、エラー処理をどうするのかという点が気になったので調査を実施。 前"
+  }
+</script>
+
+
+    <link href="https://orimajp.github.io/css/styles.css" rel="stylesheet">
+    <link href="https://orimajp.github.io/css/main.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://orimajp.github.io/">orimajp Tech Site</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://orimajp.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://orimajp.github.io/post/" itemprop="url"><span itemprop="title">post</span></a></li>
+        
+        <li class="active">@Asyncを使った非同期処理における例外の扱い</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-11-27T00:19:06JST">2017-11-27</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://orimajp.github.io/post/">post</a></li>
+      
+    </ul>
+
+    <h1 class="title">@Asyncを使った非同期処理における例外の扱い</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<p>時間が掛かる複数の処理をマルチスレッドで同時並行で動かすバッチを検討していて、エラー処理をどうするのかという点が気になったので調査を実施。</p>
+
+<h1 id="前提">前提</h1>
+
+<p>以下のようなバッチにおいて、レコード管理に不整合を起こさせない制御が可能かを調査する。</p>
+
+<ul>
+<li>DBから取得したレコードに対し同時並行で処理を行い、元のレコードを更新する</li>
+<li>Springが提供するExcecutorで同時実行数を設定し、同時実行数いっぱいまで実行させる</li>
+<li>どのレコードを処理しているかを管理し、同じレコードの同時処理を避けると共に、エラーが発生した場合は管理対象から外す</li>
+</ul>
+
+<h1 id="考えられる例外">考えられる例外</h1>
+
+<ul>
+<li>タイムアウト</li>
+<li>実行時例外</li>
+<li>起動数超過</li>
+</ul>
+
+<h1 id="各例外についての調査結果">各例外についての調査結果</h1>
+
+<h2 id="タイムアウト">タイムアウト</h2>
+
+<p>こちらはWebMvCではタイムアウト時間が設定されており、その制御方法も提供されているようだが、Webアプリではない場合はそもそもタイムアウトしないように思われる(非同期処理を1300秒動かしてタイムアウトせず)。</p>
+
+<p>実際のバッチでは外部サービスのAPIを呼ぶため、通信でタイムアウトするかも知れないが、今回は除外。</p>
+
+<h2 id="実行時例外">実行時例外</h2>
+
+<p>実行時例外が発生した場合にどのレコードがエラーになったか、非同期処理で把握できるかが心配だったが、<code>AsyncUncaughtExceptionHandler</code>の実装クラスを作ることで対応可能。</p>
+
+<h2 id="起動数超過">起動数超過</h2>
+
+<p>Excecutorの実行可能数を超過した場合、同期処理で実行する非同期処理の起動処理にて<code>RejectedExecutionException</code>が発生するため、対象レコードの特定は容易。</p>
+
+<h1 id="実装">実装</h1>
+
+<p>テストプロジェクトは<code>CommandLineRunner</code>の実装クラスとして作成。</p>
+
+<p><a href="https://github.com/orimajp/springboot-study/tree/master/async-exception-test">springboot-study/async-exception-test at master · orimajp/springboot-study</a></p>
+
+<h2 id="mainrunner">MainRunner</h2>
+
+<p>テストシナリオ的には、例外が発生する非同期処理を最初に実行し、2秒後に多重起動例外を発生させる。2秒空けているのはログの混在を避けるため。</p>
+
+<pre><code class="language-java">package com.example.asyncexceptiontest;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import java.util.concurrent.RejectedExecutionException;
+import java.util.logging.Logger;
+
+@Component
+@RequiredArgsConstructor
+public class MainRunner implements CommandLineRunner {
+
+	private final Logger logger = Logger.getLogger(getClass().getName());
+
+	private final AsyncTask asyncTask;
+
+	@Override
+	public void run(String... args) throws Exception {
+		final Integer id = 10;
+		final Dummy dummy = new Dummy(20, &quot;test&quot;);
+
+		logger.info(&quot;不正値エラー確認起動 開始&quot;);
+
+		asyncTask.exceptionProcess(id, dummy);
+
+		logger.info(&quot;不正値エラー確認起動 終了&quot;);
+
+		Thread.sleep(2000);
+
+		try {
+			logger.info(&quot;多重起動エラー確認起動 開始&quot;);
+			int i = 0;
+			while (i &lt; 10) {
+				i++;
+				logger.info(&quot;起動 &quot; + i + &quot; 回目&quot;);
+				asyncTask.process(i, dummy);
+			}
+		} catch (RejectedExecutionException e) {
+			logger.warning(&quot;多重起動エラーです。&quot;);
+		} finally {
+			logger.info(&quot;多重起動エラー確認起動 終了&quot;);
+		}
+
+	}
+
+}
+</code></pre>
+
+<h2 id="asynctask">AsyncTask</h2>
+
+<p>非同期処理実装クラス。</p>
+
+<pre><code class="language-java">package com.example.asyncexceptiontest;
+
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+
+import java.util.logging.Logger;
+
+@Component
+public class AsyncTask {
+
+	final Logger logger = Logger.getLogger(getClass().getName());
+
+	@Async
+	public void process(Integer id, Dummy dummy) {
+		try {
+			logger.info(&quot;非同期起動 id=&quot; + id);
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Async
+	public void exceptionProcess(Integer id, Dummy dummy) {
+		if (id != 1) {
+			throw new IllegalArgumentException(&quot;不正値エラー&quot;);
+		}
+	}
+
+}
+</code></pre>
+
+<h2 id="dummy">Dummy</h2>
+
+<pre><code class="language-java">package com.example.asyncexceptiontest;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Dummy {
+
+	private Integer id;
+
+	private String name;
+
+}
+</code></pre>
+
+<h2 id="executorconfig">ExecutorConfig</h2>
+
+<p>プールサイズ2、キューサイズは1となっている。</p>
+
+<pre><code class="language-java">package com.example.asyncexceptiontest;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+@Configuration
+public class ExecutorConfig {
+
+	@Bean
+	public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
+		final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+
+		executor.setCorePoolSize(2);
+		executor.setMaxPoolSize(2);
+		executor.setQueueCapacity(1);
+		executor.setThreadNamePrefix(&quot;DummyProcess-&quot;);
+		executor.initialize();
+
+		return executor;
+	}
+
+}
+</code></pre>
+
+<h2 id="customasyncuncaughtexceptionhandler">CustomAsyncUncaughtExceptionHandler</h2>
+
+<p>ここで非同期処理実行時のメソッドとパラメータを取得できるので、特例レコードを管理対象外とする処理が組めると思われる。</p>
+
+<pre><code class="language-java">package com.example.asyncexceptiontest;
+
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
+
+import java.lang.reflect.Method;
+import java.util.logging.Logger;
+
+public class CustomAsyncUncaughtExceptionHandler implements AsyncUncaughtExceptionHandler {
+
+	private final Logger logger = Logger.getLogger(getClass().getName());
+
+	@Override
+	public void handleUncaughtException(Throwable ex, Method method, Object... params) {
+		logger.info(&quot;ex:&quot; + ex);
+		logger.info(&quot;method:&quot; + method);
+
+		for (Object obj: params) {
+			logger.info(&quot;param:&quot; + obj);
+		}
+	}
+
+}
+</code></pre>
+
+<h2 id="asyncuncaughtexceptionhandlerconfig">AsyncUncaughtExceptionHandlerConfig</h2>
+
+<pre><code class="language-java">package com.example.asyncexceptiontest;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AsyncUncaughtExceptionHandlerConfig {
+
+	@Bean
+	public CustomAsyncUncaughtExceptionHandler customAsyncUncaughtExceptionHandler() {
+		return new CustomAsyncUncaughtExceptionHandler();
+	}
+
+}
+</code></pre>
+
+<h2 id="asyncconfig">AsyncConfig</h2>
+
+<p>正直言って、<code>ThreadPoolTaskExecutor</code>と<code>CustomAsyncUncaughtExceptionHandler</code>をわざわざBean定義する必要があるのかどうか分からない。</p>
+
+<pre><code class="language-java">package com.example.asyncexceptiontest;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import java.util.concurrent.Executor;
+
+@Configuration
+@RequiredArgsConstructor
+public class AsyncConfig extends AsyncConfigurerSupport {
+
+	private final ThreadPoolTaskExecutor threadPoolTaskExecutor;
+
+	private final CustomAsyncUncaughtExceptionHandler customAsyncUncaughtExceptionHandler;
+
+	@Override
+	public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+		return customAsyncUncaughtExceptionHandler;
+	}
+
+	@Override
+	public Executor getAsyncExecutor() {
+		return threadPoolTaskExecutor;
+	}
+
+}
+</code></pre>
+
+<h1 id="動作結果">動作結果</h1>
+
+<p>最初に不正値例外確認の非同期処理が実行され、例外発生を受けて<code>CustomAsyncUncaughtExceptionHandler</code>による処理が行われる。</p>
+
+<p>2秒後に多重起動エラー確認用非同期処理をループで起動し、2スレッド＋1キュー分たまったところで例外発生。非同期処理は順次実行されている。</p>
+
+<pre><code class="language-log">2017-11-26 23:16:29.335  INFO 74400 --- [           main] c.example.asyncexceptiontest.MainRunner  : 不正値エラー確認起動 開始
+2017-11-26 23:16:29.337  INFO 74400 --- [           main] c.example.asyncexceptiontest.MainRunner  : 不正値エラー確認起動 終了
+2017-11-26 23:16:29.340  INFO 74400 --- [ DummyProcess-1] .e.a.CustomAsyncUncaughtExceptionHandler : ex:java.lang.IllegalArgumentException: 不正値エラー
+2017-11-26 23:16:29.341  INFO 74400 --- [ DummyProcess-1] .e.a.CustomAsyncUncaughtExceptionHandler : method:public void com.example.asyncexceptiontest.AsyncTask.exceptionProcess(java.lang.Integer,com.example.asyncexceptiontest.Dummy)
+2017-11-26 23:16:29.346  INFO 74400 --- [ DummyProcess-1] .e.a.CustomAsyncUncaughtExceptionHandler : param:10
+2017-11-26 23:16:29.346  INFO 74400 --- [ DummyProcess-1] .e.a.CustomAsyncUncaughtExceptionHandler : param:Dummy(id=20, name=test)
+2017-11-26 23:16:31.341  INFO 74400 --- [           main] c.example.asyncexceptiontest.MainRunner  : 多重起動エラー確認起動 開始
+2017-11-26 23:16:31.343  INFO 74400 --- [           main] c.example.asyncexceptiontest.MainRunner  : 起動 1 回目
+2017-11-26 23:16:31.343  INFO 74400 --- [           main] c.example.asyncexceptiontest.MainRunner  : 起動 2 回目
+2017-11-26 23:16:31.343  INFO 74400 --- [ DummyProcess-2] c.example.asyncexceptiontest.AsyncTask   : 非同期起動 id=1
+2017-11-26 23:16:31.348  INFO 74400 --- [ DummyProcess-1] c.example.asyncexceptiontest.AsyncTask   : 非同期起動 id=2
+2017-11-26 23:16:31.348  INFO 74400 --- [           main] c.example.asyncexceptiontest.MainRunner  : 起動 3 回目
+2017-11-26 23:16:31.349  INFO 74400 --- [           main] c.example.asyncexceptiontest.MainRunner  : 起動 4 回目
+2017-11-26 23:16:31.350  WARN 74400 --- [           main] c.example.asyncexceptiontest.MainRunner  : 多重起動エラーです。
+2017-11-26 23:16:31.351  INFO 74400 --- [           main] c.example.asyncexceptiontest.MainRunner  : 多重起動エラー確認起動 終了
+2017-11-26 23:16:31.352  INFO 74400 --- [           main] c.e.a.AsyncExceptionTestApplication      : Started AsyncExceptionTestApplication in 12.61 seconds (JVM running for 22.977)
+2017-11-26 23:16:32.352  INFO 74400 --- [ DummyProcess-1] c.example.asyncexceptiontest.AsyncTask   : 非同期起動 id=3
+</code></pre>
+
+<h1 id="参考">参考</h1>
+
+<ul>
+<li><a href="https://www.qoosky.io/techs/2e9599819d">Spring Boot における非同期処理 - Qoosky</a></li>
+<li><a href="http://kimulla.hatenablog.com/entry/2016/11/01/234211">Springの@Asyncで非同期処理をする - SIerだけど技術やりたいブログ</a></li>
+<li><a href="https://www.concretepage.com/spring-4/spring-4-async-exception-handling-with-asyncuncaughtexceptionhandler">Spring 4 @Async Exception Handling with AsyncUncaughtExceptionHandler</a></li>
+<li><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#scheduling">7. Task Execution and Scheduling Integration</a></li>
+</ul>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://orimajp.github.io/categories/%E3%82%B9%E3%82%BF%E3%83%87%E3%82%A3/">スタディ</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://orimajp.github.io/tags/springboot/">springboot</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/2017/11/2017112701/" class="list-group-item">@Asyncを使った非同期処理における例外の扱い</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112601/" class="list-group-item">H2DB(MySQL mode)とFlywayの組み合わせ障害</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112501/" class="list-group-item">テーマ変更</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112401/" class="list-group-item">Server Sent Eventsテスト実装</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112301/" class="list-group-item">DI対象クラスの新規作成インスタンスからの利用</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112201/" class="list-group-item">Validatorへのインジェクション</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112102/" class="list-group-item">Spring Boot勉強用リポジトリ作成と最初の調査結果</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112101/" class="list-group-item">Hugoに苦戦</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017111901/" class="list-group-item">開設完了</a>
+      
+      <a href="https://orimajp.github.io/categories/" class="list-group-item">Categories</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/categories/%E3%82%B9%E3%82%BF%E3%83%87%E3%82%A3" class="list-group-item">スタディ</a>
+      
+      <a href="https://orimajp.github.io/categories/%E3%81%93%E3%81%AE%E3%82%B5%E3%82%A4%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" class="list-group-item">このサイトについて</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/tags/springboot" class="list-group-item">springboot</a>
+      
+      <a href="https://orimajp.github.io/tags/hugo" class="list-group-item">hugo</a>
+      
+      <a href="https://orimajp.github.io/tags/flyway" class="list-group-item">flyway</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; orimajp Tech Site</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
