@@ -6,10 +6,19 @@
     <description>Recent content in Springboot on orimajp Tech Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Mon, 27 Nov 2017 00:19:06 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 28 Nov 2017 01:46:29 +0900</lastBuildDate>
     
 	<atom:link href="https://orimajp.github.io/tags/springboot/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>アノテーションによる相関チェック</title>
+      <link>https://orimajp.github.io/2017/11/2017112801/</link>
+      <pubDate>Tue, 28 Nov 2017 01:46:29 +0900</pubDate>
+      
+      <guid>https://orimajp.github.io/2017/11/2017112801/</guid>
+      <description>以下を参考に、以前から気になっていたアノテーションを使った相関チェックバリデーションをテスト。 入力チェック：複数項目の相関チェックアノテーシ</description>
+    </item>
     
     <item>
       <title>@Asyncを使った非同期処理における例外の扱い</title>

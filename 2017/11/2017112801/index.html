@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+
+<link rel="canonical" href="https://orimajp.github.io/2017/11/2017112801/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-+ENW/yibaokMnme+vBLnHMphUYxHs34h9lpdbSLuAwGkOKFRl4C34WkjazBtb7eT" crossorigin="anonymous">
+    <title>アノテーションによる相関チェック - orimajp Tech Site</title>
+    
+<meta name="description" content="以下を参考に、以前から気になっていたアノテーションを使った相関チェックバリデーションをテスト。 入力チェック：複数項目の相関チェックアノテーシ">
+
+<meta property="og:title" content="アノテーションによる相関チェック - orimajp Tech Site">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://orimajp.github.io/2017/11/2017112801/">
+<meta property="og:image" content="https://orimajp.github.io/images/default.png">
+<meta property="og:site_name" content="orimajp Tech Site">
+<meta property="og:description" content="以下を参考に、以前から気になっていたアノテーションを使った相関チェックバリデーションをテスト。 入力チェック：複数項目の相関チェックアノテーシ">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="orimajp Tech Site">
+<meta name="twitter:url" content="https://orimajp.github.io/2017/11/2017112801/">
+<meta name="twitter:title" content="アノテーションによる相関チェック - orimajp Tech Site">
+<meta name="twitter:description" content="以下を参考に、以前から気になっていたアノテーションを使った相関チェックバリデーションをテスト。 入力チェック：複数項目の相関チェックアノテーシ">
+<meta name="twitter:image" content="https://orimajp.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://orimajp.github.io/"
+    },
+    "headline": "アノテーションによる相関チェック - orimajp Tech Site",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://orimajp.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-11-28T01:46:29JST",
+    "dateModified": "2017-11-28T01:46:29JST",
+    "author": {
+      "@type": "Person",
+      "name": "orimajp Tech Site"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "orimajp Tech Site",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://orimajp.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "以下を参考に、以前から気になっていたアノテーションを使った相関チェックバリデーションをテスト。 入力チェック：複数項目の相関チェックアノテーシ"
+  }
+</script>
+
+
+    <link href="https://orimajp.github.io/css/styles.css" rel="stylesheet">
+    <link href="https://orimajp.github.io/css/main.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://orimajp.github.io/">orimajp Tech Site</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://orimajp.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://orimajp.github.io/post/" itemprop="url"><span itemprop="title">post</span></a></li>
+        
+        <li class="active">アノテーションによる相関チェック</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-11-28T01:46:29JST">2017-11-28</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://orimajp.github.io/post/">post</a></li>
+      
+    </ul>
+
+    <h1 class="title">アノテーションによる相関チェック</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<p>以下を参考に、以前から気になっていたアノテーションを使った相関チェックバリデーションをテスト。</p>
+
+<p><a href="http://arakan-pgm-ai.hatenablog.com/entry/2017/04/08/003859">入力チェック：複数項目の相関チェックアノテーションの作り方　STS 3.8.3（Spring Boot 1.5.1）＋thymeleaf - アラカン&rdquo;BOKU&rdquo;のITな日常</a></p>
+
+<h1 id="背景">背景</h1>
+
+<p>アノテーションによる入力チェックは単項目チェックしかできないものと思っていたが、色々調べてみるとできるらしい。</p>
+
+<p>汎用性の高いバリデーションについては、アノテーションを使った方が再利用しやすいが、やり方がよく分からなかったのでとりあえず作ってみた。</p>
+
+<h1 id="基本的な考え">基本的な考え</h1>
+
+<p>今回作ったのは上記ページにある開始日、終了日の相関チェックアノテーションで、同様に以下のような仕様とする。</p>
+
+<ul>
+<li>アノテーションはフィールドではなくフォームクラスに付ける</li>
+<li>チェック対象フィールドはアノテーションのパラメータで指定</li>
+<li>書式チェック、必須チェックは他のバリデータに任せる</li>
+</ul>
+
+<h1 id="実装イメージ">実装イメージ</h1>
+
+<h2 id="アノテーションインタフェース">アノテーションインタフェース</h2>
+
+<pre><code class="language-java">package com.example.correlationcheckannotation;
+
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import javax.validation.ReportAsSingleViolation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Documented
+@Target({TYPE,ANNOTATION_TYPE})
+@Constraint(validatedBy = DateCorrelationValidator.class)
+@Retention(RUNTIME)
+@ReportAsSingleViolation
+public @interface DateCorrelationValid {
+
+	String message() default &quot;終了日は開始日より過去にはできません。&quot;;
+	Class&lt;?&gt;[] groups() default {};
+	Class&lt;? extends Payload&gt;[] payload() default {};
+
+	String startDateProperty();
+	String endDateProperty();
+
+	@Target({TYPE,ANNOTATION_TYPE})
+	@Retention(RUNTIME)
+	@Documented
+	@interface List {
+		DateCorrelationValid[] value();
+	}
+
+}
+</code></pre>
+
+<h2 id="バリデータクラス">バリデータクラス</h2>
+
+<p>日付書式例外は正常とする。</p>
+
+<pre><code class="language-java">package com.example.correlationcheckannotation;
+
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class DateCorrelationValidator implements ConstraintValidator&lt;DateCorrelationValid, Object&gt; {
+
+	private String startDateProperty;
+	private String endDateProperty;
+	private String message;
+
+	@Override
+	public void initialize(DateCorrelationValid constraintAnnotation) {
+		startDateProperty = constraintAnnotation.startDateProperty();
+		endDateProperty = constraintAnnotation.endDateProperty();
+		message = constraintAnnotation.message();
+	}
+
+	final DateTimeFormatter dtf = DateTimeFormatter.ofPattern(&quot;yyyy/MM/dd&quot;);
+
+	@Override
+	public boolean isValid(Object value, ConstraintValidatorContext context) {
+		if (value == null) {
+			return true;
+		}
+
+		final BeanWrapper beanWrapper = new BeanWrapperImpl(value);
+		final String start = (String)beanWrapper.getPropertyValue(startDateProperty);
+		final String end = (String)beanWrapper.getPropertyValue(endDateProperty);
+		final LocalDate startDate;
+		final LocalDate endDate;
+		try {
+			startDate = LocalDate.parse(start, dtf);
+			endDate = LocalDate.parse(end, dtf);
+		} catch (Exception e) {
+			return true;
+		}
+
+		if (startDate.equals(endDate) || startDate.isBefore(endDate)) {
+			return true;
+		}
+
+		context.disableDefaultConstraintViolation();
+		context.buildConstraintViolationWithTemplate(message)
+				.addPropertyNode(endDateProperty)
+				.addConstraintViolation();
+
+		return false;
+	}
+}
+</code></pre>
+
+<h2 id="フォーム">フォーム</h2>
+
+<p>対象フィールドをクラスに付加したアノテーションのパラメータで指定。</p>
+
+<pre><code class="language-java">package com.example.correlationcheckannotation;
+
+import lombok.Data;
+
+@Data
+@DateCorrelationValid(startDateProperty = &quot;startDate&quot;, endDateProperty = &quot;endDate&quot;)
+public class TestForm {
+
+	private String startDate;
+
+	private String endDate;
+
+}
+</code></pre>
+
+<h2 id="コントローラ">コントローラ</h2>
+
+<pre><code class="language-java">package com.example.correlationcheckannotation;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
+
+@Controller
+public class TopController {
+
+	@RequestMapping(&quot;/&quot;)
+	public String index(TestForm testForm) {
+		return &quot;index&quot;;
+	}
+
+	@RequestMapping(path = &quot;/post&quot;, method = RequestMethod.POST)
+	public String post(@Valid TestForm testForm, BindingResult result) {
+		if (result.hasErrors()) {
+			return &quot;index&quot;;
+		}
+		return &quot;result&quot;;
+	}
+
+}
+</code></pre>
+
+<h2 id="入力画面">入力画面</h2>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
+&lt;head&gt;
+	&lt;meta charset=&quot;UTF-8&quot;&gt;
+	&lt;title&gt;入力画面&lt;/title&gt;
+	&lt;style&gt;
+		.error_msg {
+			color: red;
+		}
+	&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h1&gt;開始日、終了日チェック&lt;/h1&gt;
+
+&lt;form th:action=&quot;@{/post}&quot; th:object=&quot;${testForm}&quot; method=&quot;post&quot;&gt;
+	&lt;div&gt;
+		&lt;label for=&quot;startDate&quot;&gt;開始日&lt;/label&gt;
+		&lt;input type=&quot;text&quot; id=&quot;startDate&quot; th:field=&quot;*{startDate}&quot;&gt;
+	&lt;/div&gt;
+	&lt;div&gt;
+		&lt;label for=&quot;endDate&quot;&gt;終了日&lt;/label&gt;
+		&lt;input type=&quot;text&quot; id=&quot;endDate&quot; th:field=&quot;*{endDate}&quot;&gt;
+		&lt;span class=&quot;error_msg&quot; th:if=&quot;${#fields.hasErrors('endDate')}&quot; th:errors=&quot;*{endDate}&quot;&gt;error!&lt;/span&gt;
+	&lt;/div&gt;
+	&lt;div&gt;
+		&lt;input type=&quot;submit&quot; value=&quot;送信&quot;&gt;
+	&lt;/div&gt;
+&lt;/form&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h2 id="結果画面">結果画面</h2>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
+&lt;head&gt;
+	&lt;meta charset=&quot;UTF-8&quot;&gt;
+	&lt;title&gt;結果画面&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h1&gt;入力OK&lt;/h1&gt;
+
+&lt;a th:href=&quot;@{/}&quot;&gt;入力画面へ&lt;/a&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://orimajp.github.io/categories/%E3%82%B9%E3%82%BF%E3%83%87%E3%82%A3/">スタディ</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://orimajp.github.io/tags/springboot/">springboot</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/2017/11/2017112801/" class="list-group-item">アノテーションによる相関チェック</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112701/" class="list-group-item">@Asyncを使った非同期処理における例外の扱い</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112601/" class="list-group-item">H2DB(MySQL mode)とFlywayの組み合わせ障害</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112501/" class="list-group-item">テーマ変更</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112401/" class="list-group-item">Server Sent Eventsテスト実装</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112301/" class="list-group-item">DI対象クラスの新規作成インスタンスからの利用</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112201/" class="list-group-item">Validatorへのインジェクション</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112102/" class="list-group-item">Spring Boot勉強用リポジトリ作成と最初の調査結果</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112101/" class="list-group-item">Hugoに苦戦</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017111901/" class="list-group-item">開設完了</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/categories/%E3%82%B9%E3%82%BF%E3%83%87%E3%82%A3" class="list-group-item">スタディ</a>
+      
+      <a href="https://orimajp.github.io/categories/%E3%81%93%E3%81%AE%E3%82%B5%E3%82%A4%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" class="list-group-item">このサイトについて</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/tags/springboot" class="list-group-item">springboot</a>
+      
+      <a href="https://orimajp.github.io/tags/hugo" class="list-group-item">hugo</a>
+      
+      <a href="https://orimajp.github.io/tags/flyway" class="list-group-item">flyway</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; orimajp Tech Site</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
