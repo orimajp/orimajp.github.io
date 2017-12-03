@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+
+<link rel="canonical" href="https://orimajp.github.io/2017/12/2017120301/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-+ENW/yibaokMnme+vBLnHMphUYxHs34h9lpdbSLuAwGkOKFRl4C34WkjazBtb7eT" crossorigin="anonymous">
+    <title>WebアプリケーションにおけるRestステータス返却 - orimajp Tech Site</title>
+    
+<meta name="description" content="Spring Bootによる開発を初めて日が浅いため色々と分からないことがあり、そのうちの一つとしてWebアプリケーションにおけるAjaxアクセス時のエ">
+
+<meta property="og:title" content="WebアプリケーションにおけるRestステータス返却 - orimajp Tech Site">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://orimajp.github.io/2017/12/2017120301/">
+<meta property="og:image" content="https://orimajp.github.io/images/default.png">
+<meta property="og:site_name" content="orimajp Tech Site">
+<meta property="og:description" content="Spring Bootによる開発を初めて日が浅いため色々と分からないことがあり、そのうちの一つとしてWebアプリケーションにおけるAjaxアクセス時のエ">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="orimajp Tech Site">
+<meta name="twitter:url" content="https://orimajp.github.io/2017/12/2017120301/">
+<meta name="twitter:title" content="WebアプリケーションにおけるRestステータス返却 - orimajp Tech Site">
+<meta name="twitter:description" content="Spring Bootによる開発を初めて日が浅いため色々と分からないことがあり、そのうちの一つとしてWebアプリケーションにおけるAjaxアクセス時のエ">
+<meta name="twitter:image" content="https://orimajp.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://orimajp.github.io/"
+    },
+    "headline": "WebアプリケーションにおけるRestステータス返却 - orimajp Tech Site",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://orimajp.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-12-03T21:43:34JST",
+    "dateModified": "2017-12-03T21:43:34JST",
+    "author": {
+      "@type": "Person",
+      "name": "orimajp Tech Site"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "orimajp Tech Site",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://orimajp.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Spring Bootによる開発を初めて日が浅いため色々と分からないことがあり、そのうちの一つとしてWebアプリケーションにおけるAjaxアクセス時のエ"
+  }
+</script>
+
+
+    <link href="https://orimajp.github.io/css/styles.css" rel="stylesheet">
+    <link href="https://orimajp.github.io/css/main.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://orimajp.github.io/">orimajp Tech Site</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://orimajp.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://orimajp.github.io/post/" itemprop="url"><span itemprop="title">post</span></a></li>
+        
+        <li class="active">WebアプリケーションにおけるRestステータス返却</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-12-03T21:43:34JST">2017-12-03</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://orimajp.github.io/post/">post</a></li>
+      
+    </ul>
+
+    <h1 class="title">WebアプリケーションにおけるRestステータス返却</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<p>Spring Bootによる開発を初めて日が浅いため色々と分からないことがあり、そのうちの一つとしてWebアプリケーションにおけるAjaxアクセス時のエラー返却方法が分からず苦戦していたので、調査してみた。</p>
+
+<h1 id="困っていたこと">困っていたこと</h1>
+
+<ol>
+<li>Ajaxアクセス時の例外制御をWeb側と独立して処理できない</li>
+<li>CSRFトークンを使っているとセッション切れ時に<code>403</code>エラーとなる</li>
+</ol>
+
+<p>まず1についてだが、<code>@ControllerAdvice</code>による例外制御を入れるとWebページへの通常アクセスも捕まえてしまうので、Ajaxアクセス専用の処理を入れづらい。</p>
+
+<p>2については、CSRFトークン利用時(というかSpring Securityデフォルト設定時)にセッション切れ後のPOSTアクセスにて、<code>401</code>でなく<code>403</code>になってしまうという問題がある。この問題は通常のWebアクセスにおけるPOSTメソッド利用時でも発生する。</p>
+
+<h1 id="解決策">解決策</h1>
+
+<h2 id="controlleradviceにおけるannotationsパラメータの利用">@ControllerAdviceにおけるannotationsパラメータの利用</h2>
+
+<p>ググっても回答は見つからなかったが<code>ControllerAdvice</code>のソースを眺めていたら以下の記述を発見。</p>
+
+<pre><code class="language-java">/**
+ * Array of annotations.
+ * &lt;p&gt;Controllers that are annotated with this/one of those annotation(s)
+ * will be assisted by the {@code @ControllerAdvice} annotated class.
+ * &lt;p&gt;Consider creating a special annotation or use a predefined one,
+ * like {@link RestController @RestController}.
+ * @since 4.0
+ */
+Class&lt;? extends Annotation&gt;[] annotations() default {};
+</code></pre>
+
+<p>駄目元で<code>@ControllerAdvice(annotations = {RestController.class})</code>のように書いてみたら、<code>@RestController</code>を付加したコントローラの例外のみ拾ってくれる(らしい)事が分かった。</p>
+
+<h2 id="authenticationentrypointとaccessdeniedhandlerのカスタマイズ">AuthenticationEntryPointとAccessDeniedHandlerのカスタマイズ</h2>
+
+<p>以下の情報を元に上記クラスのカスタマイズを行う事で、セッション切れ時の動作+Ajax動作時の動作を変更できた。</p>
+
+<ul>
+<li><a href="http://progmemo.wp.xdomain.jp/archives/847">Spring Boot + Spring Security使用時のSessionTimeout対応 - システム開発メモ</a></li>
+<li><a href="http://progmemo.wp.xdomain.jp/archives/858">Spring Boot + Spring Security使用時のCSRFとSessionTimeoutの問題 - システム開発メモ</a></li>
+</ul>
+
+<h3 id="csrfトークン例外制御の制約">CSRFトークン例外制御の制約</h3>
+
+<p>CSRFトークンアクセスの例外制御は初回アクセスしか<code>401</code>にならず、2回目以降は<code>403</code>になってしまうみたいなので、Ajaxアクセスで<code>401</code>を検出したら速やかにログイン画面に飛ばす必要がある。</p>
+
+<h4 id="初回アクセス">初回アクセス</h4>
+
+<p>Ajaxアクセス時に実装した例外処理からの返却値が返る。</p>
+
+<pre><code>json={&quot;readyState&quot;:4,&quot;responseText&quot;:&quot;{\&quot;timestamp\&quot;:1512293582196,\&quot;status\&quot;:401,\&quot;error\&quot;:\&quot;Unauthorized\&quot;,\&quot;message\&quot;:\&quot;セッションは無効です\&quot;,\&quot;path\&quot;:\&quot;/ok\&quot;}&quot;,&quot;responseJSON&quot;:{&quot;timestamp&quot;:1512293582196,&quot;status&quot;:401,&quot;error&quot;:&quot;Unauthorized&quot;,&quot;message&quot;:&quot;セッションは無効です&quot;,&quot;path&quot;:&quot;/ok&quot;},&quot;status&quot;:401,&quot;statusText&quot;:&quot;error&quot;}
+main.js:24 message=セッションは無効です
+main.js:25 status=401
+main.js:26 textStatus=error
+main.js:27 errorThrown=
+main.js:30 通信完了
+</code></pre>
+
+<h4 id="2回目アクセス">2回目アクセス</h4>
+
+<p>実装した例外処理に入ってないのでその手前で捌かれている模様。</p>
+
+<pre><code>json={&quot;readyState&quot;:4,&quot;responseText&quot;:&quot;{\&quot;timestamp\&quot;:1512293587636,\&quot;status\&quot;:403,\&quot;error\&quot;:\&quot;Forbidden\&quot;,\&quot;message\&quot;:\&quot;Invalid CSRF Token 'a344e496-0a4d-4a1c-bb53-344df2e41456' was found on the request parameter '_csrf' or header 'X-CSRF-TOKEN'.\&quot;,\&quot;path\&quot;:\&quot;/ok\&quot;}&quot;,&quot;responseJSON&quot;:{&quot;timestamp&quot;:1512293587636,&quot;status&quot;:403,&quot;error&quot;:&quot;Forbidden&quot;,&quot;message&quot;:&quot;Invalid CSRF Token 'a344e496-0a4d-4a1c-bb53-344df2e41456' was found on the request parameter '_csrf' or header 'X-CSRF-TOKEN'.&quot;,&quot;path&quot;:&quot;/ok&quot;},&quot;status&quot;:403,&quot;statusText&quot;:&quot;error&quot;}
+main.js:24 message=Invalid CSRF Token 'a344e496-0a4d-4a1c-bb53-344df2e41456' was found on the request parameter '_csrf' or header 'X-CSRF-TOKEN'.
+main.js:25 status=403
+main.js:26 textStatus=error
+main.js:27 errorThrown=
+main.js:30 通信完了
+</code></pre>
+
+<h1 id="実装方法">実装方法</h1>
+
+<p>今回の実装は以下を参照。</p>
+
+<p><a href="https://github.com/orimajp/springboot-study/tree/master/rest-json-status-test">springboot-study/rest-json-status-test at master · orimajp/springboot-study</a></p>
+
+<h2 id="rest例外処理共通処理">REST例外処理共通処理</h2>
+
+<p><code>@ControllerAdvice</code>で取得可能な例外の内、対応処理が書かれていないものについては<code>Exception</code>に対応した例外ハンドラが呼ばれる模様。以下に含まれない例外については追加が必要。</p>
+
+<pre><code class="language-java">package com.example.restjsonstatustest;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
+
+@ControllerAdvice(annotations = {RestController.class})
+public class RestExceptionHandler {
+
+	private final Logger logger = Logger.getLogger(getClass().getName());
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler({MethodArgumentTypeMismatchException.class})
+	@ResponseBody
+	public Map&lt;String, Object&gt; methodArgumentTypeMismatchExceptionErrorHandler(MethodArgumentTypeMismatchException e) {
+		logger.warning(&quot;エラー：&quot; + e.getMessage());
+		final Map&lt;String, Object&gt; errorMap = new HashMap&lt;&gt;();
+		errorMap.put(&quot;message&quot;, &quot;パラメータのデータ型が正しくありません&quot;);
+		errorMap.put(&quot;status&quot;, HttpStatus.BAD_REQUEST);
+		return errorMap;
+	}
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler({MissingServletRequestParameterException.class})
+	@ResponseBody
+	public Map&lt;String, Object&gt; issingServletRequestParameterExceptionErrorHandler(MissingServletRequestParameterException e) {
+		logger.warning(&quot;エラー：&quot; + e.getMessage());
+		final Map&lt;String, Object&gt; errorMap = new HashMap&lt;&gt;();
+		errorMap.put(&quot;message&quot;, &quot;必須パラメータが指定されていません&quot;);
+		errorMap.put(&quot;status&quot;, HttpStatus.BAD_REQUEST);
+		return errorMap;
+	}
+
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	@ExceptionHandler({AccessDeniedException.class})
+	@ResponseBody
+	public Map&lt;String, Object&gt; accessDeniedExceptionErrorHandler(AccessDeniedException e) {
+		logger.warning(&quot;エラー：&quot; + e.getMessage());
+		final Map&lt;String, Object&gt; errorMap = new HashMap&lt;&gt;();
+		errorMap.put(&quot;message&quot;, &quot;認可されないアクセスです&quot;);
+		errorMap.put(&quot;status&quot;, HttpStatus.FORBIDDEN);
+		return errorMap;
+	}
+
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler({Exception.class})
+	@ResponseBody
+	public Map&lt;String, Object&gt; exceptionErrorHandler(Exception e) {
+		logger.warning(&quot;エラー：&quot; + e.getMessage());
+		final Map&lt;String, Object&gt; errorMap = new HashMap&lt;&gt;();
+		errorMap.put(&quot;message&quot;, &quot;サーバエラーです&quot;);
+		errorMap.put(&quot;status&quot;, HttpStatus.INTERNAL_SERVER_ERROR);
+		return errorMap;
+	}
+
+}
+
+</code></pre>
+
+<p>上記では各例外毎に別メソッドで対応しているが、以下のように一つのメソッド内で例外クラスを判定して処理を分岐する方法も考えられる。ただ、数が増えてくると対応しづらくなる気はする。</p>
+
+<pre><code class="language-java">	@ExceptionHandler({Exception.class})
+	@ResponseBody
+	public ResponseEntity exceptionErrorHandler(Exception e) {
+		if (e.getCause() instanceof AccessDeniedException) {
+			logger.warning(&quot;エラー：&quot; + e.getMessage());
+			final Map&lt;String, Object&gt; errorMap = new HashMap&lt;&gt;();
+			errorMap.put(&quot;message&quot;, &quot;認可エラーです&quot;);
+			errorMap.put(&quot;status&quot;, HttpStatus.FORBIDDEN);
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorMap);
+		}
+		logger.warning(&quot;エラー：&quot; + e.getMessage());
+		final Map&lt;String, Object&gt; errorMap = new HashMap&lt;&gt;();
+		errorMap.put(&quot;message&quot;, &quot;サーバエラーです&quot;);
+		errorMap.put(&quot;status&quot;, HttpStatus.INTERNAL_SERVER_ERROR);
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMap);
+	}
+</code></pre>
+
+<h2 id="authenticationentrypointカスタマイズ">AuthenticationEntryPointカスタマイズ</h2>
+
+<p>こちらはAjaxアクセスにて認証エラーが発生した場合への対応を行っている。</p>
+
+<pre><code class="language-java">package com.example.restjsonstatustest;
+
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/*
+ * http://progmemo.wp.xdomain.jp/archives/847
+ */
+public class SessionExpiredDetectingLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
+
+	public SessionExpiredDetectingLoginUrlAuthenticationEntryPoint(String loginFormUrl) {
+		super(loginFormUrl);
+	}
+
+	/**
+	 * Ajaxアクセス時対応
+	 *
+	 * @param request HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @param authException AuthenticationException
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	@Override
+	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+		if (&quot;XMLHttpRequest&quot;.equals(request.getHeader(&quot;X-Requested-With&quot;))) {
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, &quot;セッションは無効です&quot;);
+			return;
+		}
+		super.commence(request, response, authException);
+	}
+
+}
+</code></pre>
+
+<h2 id="securityconfig">SecurityConfig</h2>
+
+<p>後半にある<code>AccessDeniedHandler</code>のBean定義にてCSRFトークン消失時に発生する<code>MissingCsrfTokenException</code>への対応を行っている。</p>
+
+<pre><code class="language-java">package com.example.restjsonstatustest;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.AccessDeniedHandlerImpl;
+import org.springframework.security.web.csrf.MissingCsrfTokenException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.logging.Logger;
+
+/*
+ * https://www.slideshare.net/navekazu/spring-bootweb-55470364
+ * http://progmemo.wp.xdomain.jp/archives/858
+ */
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	private final Logger logger = Logger.getLogger(getClass().getName());
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+				.anyRequest().authenticated();
+
+		http.formLogin()
+				.loginPage(&quot;/login&quot;)
+				.usernameParameter(&quot;username&quot;)
+				.passwordParameter(&quot;password&quot;)
+				.permitAll();
+
+		http.exceptionHandling()
+				.authenticationEntryPoint(authenticationEntryPoint())
+				.accessDeniedHandler(accessDeniedHandler());
+	}
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.inMemoryAuthentication()
+				.withUser(&quot;user&quot;).password(&quot;pass&quot;).roles(&quot;USER&quot;).and()
+				.withUser(&quot;admin&quot;).password(&quot;pass&quot;).roles(&quot;USER&quot;, &quot;ADMIN&quot;);
+	}
+
+	@Bean
+	AuthenticationEntryPoint authenticationEntryPoint() {
+		return new SessionExpiredDetectingLoginUrlAuthenticationEntryPoint(&quot;/login&quot;);
+	}
+
+	/**
+	 * タイムアウト如ルCSRFトークン消失対応
+	 *
+	 * @return AccessDeniedHandler
+	 */
+	@Bean
+	AccessDeniedHandler accessDeniedHandler() {
+		return new AccessDeniedHandler() {
+			@Override
+			public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException)
+					throws IOException, ServletException {
+				if (accessDeniedException instanceof MissingCsrfTokenException) {
+					logger.warning(&quot;CSRFトークンが無効&quot;);
+					authenticationEntryPoint().commence(request, response, null);
+				} else {
+					new AccessDeniedHandlerImpl().handle(request, response, accessDeniedException);
+				}
+			}
+		};
+	}
+
+}
+</code></pre>
+
+<h2 id="認証コントローラ">認証コントローラ</h2>
+
+<pre><code class="language-java">package com.example.restjsonstatustest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class TopController {
+
+	@RequestMapping(value = &quot;/&quot;, method = RequestMethod.GET)
+	public String index() {
+		return &quot;index&quot;;
+	}
+
+	@RequestMapping(value = &quot;/login&quot;, method = RequestMethod.GET)
+	public String login() {
+		return &quot;login&quot;;
+	}
+
+}
+</code></pre>
+
+<h2 id="webテストコントローラ">Webテストコントローラ</h2>
+
+<pre><code class="language-java">package com.example.restjsonstatustest;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class TestController {
+
+	// 正常系(POST/GET共用)
+	@RequestMapping(value = &quot;/okrequest&quot;)
+	public String okRequest() {
+		return &quot;result&quot;;
+	}
+
+	// パラメータエラー
+	@RequestMapping(value = &quot;/paramcheck&quot;, method = RequestMethod.GET)
+	public String missMatchParameter(@RequestParam Integer value) {
+		return &quot;result&quot;;
+	}
+
+	// Internal Server Error
+	@RequestMapping(value = &quot;/internalservererror&quot;, method = RequestMethod.GET)
+	public String internalServerError(Model model) {
+		if (model != null) {
+			throw new IllegalArgumentException(&quot;テストエラー&quot;);
+		}
+		return &quot;result&quot;;
+	}
+
+	// 権限チェック用
+	@PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+	@RequestMapping(value = &quot;/adminonly&quot;, method = RequestMethod.GET)
+	public String adminOnly() {
+		return &quot;result&quot;;
+	}
+
+}
+</code></pre>
+
+<h2 id="restテストコントローラ">RESTテストコントローラ</h2>
+
+<pre><code class="language-java">package com.example.restjsonstatustest;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class RestTestController {
+
+	// OKパターン
+	@RequestMapping(value = &quot;/ok&quot;, method = RequestMethod.POST)
+	public ResponseEntity ok() {
+		return ResponseEntity.ok(&quot;ok&quot;);
+	}
+
+	// GET バリデートエラー用
+	@RequestMapping(value = &quot;/valid&quot;, method = RequestMethod.GET)
+	public ResponseEntity valid(@RequestParam Integer value) {
+		return ResponseEntity.ok(&quot;ok&quot;);
+	}
+
+	// Internal Server Error
+	@RequestMapping(value = &quot;/servererrorrest&quot;, method = RequestMethod.GET)
+	public ResponseEntity internalServerErrorRest(Model model) {
+		if (model != null) {
+			throw new IllegalArgumentException(&quot;テストエラー&quot;);
+		}
+		return ResponseEntity.ok(&quot;ok&quot;);
+	}
+
+	// 権限テスト
+	@PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+	@RequestMapping(value = &quot;/adminrest&quot;, method = RequestMethod.GET)
+	public ResponseEntity adminOnlyRest() {
+		return ResponseEntity.ok(&quot;ok&quot;);
+	}
+
+}
+</code></pre>
+
+<h2 id="ログイン画面">ログイン画面</h2>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
+&lt;head&gt;
+	&lt;meta charset=&quot;UTF-8&quot;&gt;
+	&lt;title&gt;ログインページ&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;form th:action=&quot;@{/login}&quot; method=&quot;post&quot;&gt;
+	&lt;div&gt;
+		&lt;label&gt;ユーザ名:
+			&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;
+		&lt;/label&gt;
+	&lt;/div&gt;
+	&lt;div&gt;
+		&lt;label&gt;パスワード:
+			&lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;
+		&lt;/label&gt;
+	&lt;/div&gt;
+	&lt;div&gt;&lt;input type=&quot;submit&quot; value=&quot;ログイン&quot;&gt;&lt;/div&gt;
+&lt;/form&gt;
+
+&lt;script src=&quot;https://code.jquery.com/jquery-3.2.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+	$(function () {
+		$('input[name=&quot;username&quot;]').focus();
+	});
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h2 id="テスト画面">テスト画面</h2>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
+&lt;head&gt;
+	&lt;meta charset=&quot;UTF-8&quot;&gt;
+	&lt;meta name=&quot;_csrf&quot; th:content=&quot;${_csrf.token}&quot; /&gt;
+	&lt;meta name=&quot;_csrf_header&quot; th:content=&quot;${_csrf.headerName}&quot; /&gt;
+	&lt;title&gt;テストページ&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1 th:inline=&quot;text&quot;&gt;こんにちは [[${#httpServletRequest.remoteUser}]]&lt;/h1&gt;
+
+&lt;h2&gt;REST(Ajax)テスト&lt;/h2&gt;
+&lt;div&gt;
+	&lt;input type=&quot;button&quot; id=&quot;okButton&quot; value=&quot;OKパターン&quot;&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+	&lt;input type=&quot;button&quot; id=&quot;getRequiredErrorButton&quot; value=&quot;GET必須チェックエラー&quot;&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+	&lt;input type=&quot;button&quot; id=&quot;getValidateErrorButton&quot; value=&quot;GETデータ型バリデートエラー&quot;&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+	&lt;input type=&quot;button&quot; id=&quot;serverErrorRestButton&quot; value=&quot;サーバエラー&quot;&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+	&lt;input type=&quot;button&quot; id=&quot;adminrest&quot; value=&quot;ADMINユーザのみ&quot;&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+	&lt;input type=&quot;button&quot; id=&quot;notfound&quot; value=&quot;リンク切れ&quot;&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Webテスト&lt;/h2&gt;
+&lt;div&gt;
+	&lt;a th:href=&quot;@{/okrequest}&quot;&gt;OKパターン(GET)&lt;/a&gt;
+&lt;/div&gt;
+&lt;div&gt;
+	&lt;form th:action=&quot;@{/okrequest}&quot; method=&quot;post&quot;&gt;
+		&lt;input type=&quot;submit&quot; value=&quot;OKパターン(POST)&quot;&gt;
+	&lt;/form&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+	&lt;a th:href=&quot;@{/paramcheck}&quot;&gt;GET引数無しエラー&lt;/a&gt;
+&lt;/div&gt;
+&lt;div&gt;
+	&lt;a th:href=&quot;@{paramcheck(value=${'aaa'})}&quot;&gt;GETデータ型バリデートエラー&lt;/a&gt;
+&lt;/div&gt;
+&lt;div&gt;
+	&lt;a th:href=&quot;@{/internalservererror}&quot;&gt;サーバエラー&lt;/a&gt;
+&lt;/div&gt;
+&lt;div&gt;
+	&lt;a th:href=&quot;@{/adminonly}&quot;&gt;ADMINユーザのみ&lt;/a&gt;
+&lt;/div&gt;
+&lt;div&gt;
+	&lt;a th:href=&quot;@{/notfound}&quot;&gt;リンク切れ&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+
+&lt;form th:action=&quot;@{/logout}&quot; method=&quot;post&quot;&gt;
+	&lt;input type=&quot;submit&quot; value=&quot;ログアウト&quot;&gt;
+&lt;/form&gt;
+
+&lt;script src=&quot;https://code.jquery.com/jquery-3.2.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script th:src=&quot;@{/js/main.js}&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h2 id="外部javascript">外部JavaScript</h2>
+
+<p>Ajaxアクセスに利用。</p>
+
+<pre><code class="language-js">$(function () {
+	$('#okButton').on('click', function () {
+		var csrfToken = $('meta[name=&quot;_csrf&quot;]').attr('content');
+		var csrfHeader = $('meta[name=&quot;_csrf_header&quot;]').attr('content');
+		$.ajax({
+			url: '/ok',
+			type: 'post',
+			cache: false,
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(csrfHeader, csrfToken);
+			}
+		}).done(function (data,textStatus,jqXHR) {
+			console.log('textStatus=' + textStatus);
+			console.log('jsXHR.status=' + jqXHR.status);
+			var json = JSON.stringify(data);
+			console.log('json=' + json);
+			alert('Ok json=' + json);
+		}).fail(function (jqXHR, textStatus, errorThrown) {
+			var json = JSON.stringify(jqXHR);
+			console.log('json=' + json);
+			console.log('message=' + jqXHR.responseJSON.message);
+			console.log('status=' + jqXHR.status);
+			console.log('textStatus=' + textStatus);
+			console.log('errorThrown=' + errorThrown);
+			alert(&quot;Error status=&quot; + jqXHR.status);
+		}).always(function () {
+			console.log('通信完了');
+		});
+	});
+
+	$('#getRequiredErrorButton').on('click', function () {
+		$.ajax({
+			url: '/valid',
+			type: 'get',
+			cache: false
+		}).done(function (data,textStatus,jqXHR) {
+			console.log('textStatus=' + textStatus);
+			console.log('jsXHR.status=' + jqXHR.status);
+			var json = JSON.stringify(data);
+			console.log('json=' + json);
+			alert('Ok json=' + json);
+		}).fail(function (jqXHR, textStatus, errorThrown) {
+			var json = JSON.stringify(jqXHR);
+			console.log('json=' + json);
+			console.log('message=' + jqXHR.responseJSON.message);
+			console.log('status=' + jqXHR.status);
+			console.log('textStatus=' + textStatus);
+			console.log('errorThrown=' + errorThrown);
+			alert(&quot;Error status=&quot; + jqXHR.status);
+		});
+	});
+
+	$('#getValidateErrorButton').on('click', function () {
+		$.ajax({
+			url: '/valid?value=aaaa',
+			type: 'get',
+			cache: false
+		}).done(function (data,textStatus,jqXHR) {
+			console.log('textStatus=' + textStatus);
+			console.log('jsXHR.status=' + jqXHR.status);
+			var json = JSON.stringify(data);
+			console.log('json=' + json);
+			alert('Ok json=' + json);
+		}).fail(function (jqXHR, textStatus, errorThrown) {
+			var json = JSON.stringify(jqXHR);
+			console.log('json=' + json);
+			console.log('message=' + jqXHR.responseJSON.message);
+			console.log('status=' + jqXHR.status);
+			console.log('textStatus=' + textStatus);
+			console.log('errorThrown=' + errorThrown);
+			alert(&quot;Error status=&quot; + jqXHR.status);
+		});
+	});
+
+	$('#serverErrorRestButton').on('click', function () {
+		$.ajax({
+			url: '/servererrorrest',
+			type: 'get',
+			cache: false
+		}).done(function (data,textStatus,jqXHR) {
+			console.log('textStatus=' + textStatus);
+			console.log('jsXHR.status=' + jqXHR.status);
+			var json = JSON.stringify(data);
+			console.log('json=' + json);
+			alert('Ok json=' + json);
+		}).fail(function (jqXHR, textStatus, errorThrown) {
+			var json = JSON.stringify(jqXHR);
+			console.log('json=' + json);
+			console.log('message=' + jqXHR.responseJSON.message);
+			console.log('status=' + jqXHR.status);
+			console.log('textStatus=' + textStatus);
+			console.log('errorThrown=' + errorThrown);
+			alert(&quot;Error status=&quot; + jqXHR.status);
+		});
+	});
+
+	$('#adminrest').on('click', function () {
+		$.ajax({
+			url: '/adminrest',
+			type: 'get',
+			cache: false
+		}).done(function (data,textStatus,jqXHR) {
+			console.log('textStatus=' + textStatus);
+			console.log('jsXHR.status=' + jqXHR.status);
+			var json = JSON.stringify(data);
+			console.log('json=' + json);
+			alert('Ok json=' + json);
+		}).fail(function (jqXHR, textStatus, errorThrown) {
+			var json = JSON.stringify(jqXHR);
+			console.log('json=' + json);
+			console.log('message=' + jqXHR.responseJSON.message);
+			console.log('status=' + jqXHR.status);
+			console.log('textStatus=' + textStatus);
+			console.log('errorThrown=' + errorThrown);
+			alert(&quot;Error status=&quot; + jqXHR.status);
+		});
+	});
+
+	$('#notfound').on('click', function () {
+		$.ajax({
+			url: '/notfound',
+			type: 'get',
+			cache: false
+		}).done(function (data,textStatus,jqXHR) {
+			console.log('textStatus=' + textStatus);
+			console.log('jsXHR.status=' + jqXHR.status);
+			var json = JSON.stringify(data);
+			console.log('json=' + json);
+			alert('Ok json=' + json);
+		}).fail(function (jqXHR, textStatus, errorThrown) {
+			var json = JSON.stringify(jqXHR);
+			console.log('json=' + json);
+			console.log('message=' + jqXHR.responseJSON.message);
+			console.log('status=' + jqXHR.status);
+			console.log('textStatus=' + textStatus);
+			console.log('errorThrown=' + errorThrown);
+			alert(&quot;Error status=&quot; + jqXHR.status);
+		});
+	});
+
+});
+</code></pre>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://orimajp.github.io/categories/%E3%82%B9%E3%82%BF%E3%83%87%E3%82%A3/">スタディ</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://orimajp.github.io/tags/springboot/">springboot</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/2017/12/2017120301/" class="list-group-item">WebアプリケーションにおけるRestステータス返却</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017113001/" class="list-group-item">AOPによるログ出力</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112901/" class="list-group-item">DIによるプラグイン実装テスト</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112801/" class="list-group-item">アノテーションによる相関チェック</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112701/" class="list-group-item">@Asyncを使った非同期処理における例外の扱い</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112601/" class="list-group-item">H2DB(MySQL mode)とFlywayの組み合わせ障害</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112501/" class="list-group-item">テーマ変更</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112401/" class="list-group-item">Server Sent Eventsテスト実装</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112301/" class="list-group-item">DI対象クラスの新規作成インスタンスからの利用</a>
+      
+      <a href="https://orimajp.github.io/2017/11/2017112201/" class="list-group-item">Validatorへのインジェクション</a>
+      
+    </div>
+  </section>
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/categories/%E3%82%B9%E3%82%BF%E3%83%87%E3%82%A3" class="list-group-item">スタディ</a>
+      
+      <a href="https://orimajp.github.io/categories/%E3%81%93%E3%81%AE%E3%82%B5%E3%82%A4%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" class="list-group-item">このサイトについて</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://orimajp.github.io/tags/springboot" class="list-group-item">springboot</a>
+      
+      <a href="https://orimajp.github.io/tags/hugo" class="list-group-item">hugo</a>
+      
+      <a href="https://orimajp.github.io/tags/flyway" class="list-group-item">flyway</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; orimajp Tech Site</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
